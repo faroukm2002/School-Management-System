@@ -12,13 +12,19 @@ const addAdmin = catchError(async(req,res,next) => {
 }) 
 
 
+// Get teacher
+const getAlladmins=catchError(async(req,res,next)=>{
+    let admin = await adminModel.find();
 
+    // created
+      res.status(200).json({ message: "Done this is admins", admin });
+    });
 
 
 
 export {
  addAdmin,
-
+ getAlladmins
 }
 
   

@@ -8,6 +8,7 @@ const adminRouter=express.Router();
 
 adminRouter.route('/')
 .post(admin.addAdmin)
+.get(admin.getAlladmins)
 
 
 export default adminRouter
