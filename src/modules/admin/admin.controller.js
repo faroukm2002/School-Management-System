@@ -1,5 +1,6 @@
 import { adminModel } from "../../../database/models/admin.models.js"
 import { catchError } from "../../utils/catchError.js"
+import { deleteOne } from "../handlers/refactor.js"
 
 
 
@@ -49,6 +50,7 @@ const updateAdmin= catchError(async(req,res,next)=>{
 }
 )
 
+const deleteAdmin= deleteOne(adminModel,"Teacher")
 
 
 
@@ -71,7 +73,8 @@ export {
  addAdmin,
  getAlladmins,
  getAdminByID,
- updateAdmin
+ updateAdmin,
+ deleteAdmin
 }
 
   

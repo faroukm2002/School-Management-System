@@ -14,5 +14,6 @@ adminRouter.route('/')
 adminRouter.route('/:id')
 .get(admin.getAdminByID)
 .put( admin.updateAdmin)
+.delete(admin.deleteAdmin)
 
 export default adminRouter
