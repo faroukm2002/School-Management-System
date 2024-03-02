@@ -65,5 +65,5 @@ timestamps: true
 
  
 
-export const subjectModel=model('admin',adminSchema)
+export const adminModel=model('admin',adminSchema)
  
