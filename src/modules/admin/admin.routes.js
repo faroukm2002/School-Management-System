@@ -11,4 +11,7 @@ adminRouter.route('/')
 .get(admin.getAlladmins)
 
 
+adminRouter.route('/:id')
+.get(admin.getAdminByID)
+
 export default adminRouter
