@@ -36,6 +36,20 @@ const getAlladmins=catchError(async(req,res,next)=>{
 
 })
  
+const updateAdmin= catchError(async(req,res,next)=>{
+    const{id}=req.params
+    const admin=await adminModel.findByIdAndUpdate(
+        id,
+        req.body,
+        {new:true}
+    )
+    !admin && next(new AppError('admin not found',404))
+
+      admin &&   res.status(201).json({message:"Done",admin})
+}
+)
+
+
 
 
 // //  GetAdmin profile
@@ -57,6 +71,7 @@ export {
  addAdmin,
  getAlladmins,
  getAdminByID,
+ updateAdmin
 }
 
   
