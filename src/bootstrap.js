@@ -1,4 +1,5 @@
 import { globalError } from "./middleware/globalErrorMiddleware.js";
+import adminRouter from "./modules/admin/admin.routes.js";
 import ClassLevelRouter from "./modules/class/class.routes.js";
 import subjectRouter from "./modules/subject/subject.routes.js";
 import teacherRouter from "./modules/teacher/teacher.routes.js"
@@ -10,6 +11,7 @@ export function bootstrap(app){
     app.use("/api/v1/teacher",teacherRouter)
     app.use("/api/v1/subject",subjectRouter)
     app.use("/api/v1/class",ClassLevelRouter)
+    app.use("/api/v1/admin",adminRouter)
 
   // url error
   app.use("*", (req, res, next) => {
