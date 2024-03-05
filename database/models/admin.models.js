@@ -1,4 +1,5 @@
 import { Schema,Types,model } from "mongoose"
+import bcrypt from 'bcrypt';
 
 const adminSchema = new Schema({
     
@@ -62,8 +63,10 @@ studens: {
 timestamps: true
 })
 
-
- 
+// hash password 
+adminSchema.pre("save", function () {
+    this.password = bcrypt.hashSync(this.password, parseInt(process.env.SALTROUND))
+})
 
 export const adminModel=model('admin',adminSchema)
  

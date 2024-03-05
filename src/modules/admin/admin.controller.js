@@ -5,13 +5,13 @@ import { deleteOne } from "../handlers/refactor.js"
 
 
 
-// Add Admin
-const addAdmin = catchError(async(req,res,next) => {
-    const Admin =new adminModel(req.body)
-    await Admin.save()
-    res.status(201).json({message:"Done",Admin})
+// // Add Admin
+// const addAdmin = catchError(async(req,res,next) => {
+//     const Admin =new adminModel(req.body)
+//     await Admin.save()
+//     res.status(201).json({message:"Done",Admin})
 
-}) 
+// }) 
 
 
 // Get admin
@@ -71,7 +71,7 @@ const deleteAdmin= deleteOne(adminModel,"Teacher")
 
 
 export {
- addAdmin,
+//  addAdmin,
  getAlladmins,
  getAdminByID,
  updateAdmin,
