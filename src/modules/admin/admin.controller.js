@@ -1,4 +1,5 @@
 import { adminModel } from "../../../database/models/admin.models.js"
+import { AppError } from "../../utils/AppError.js"
 import { catchError } from "../../utils/catchError.js"
 import { deleteOne } from "../handlers/refactor.js"
 

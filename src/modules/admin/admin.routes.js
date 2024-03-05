@@ -1,13 +1,14 @@
 import express from 'express';
 import *as admin from './admin.controller.js';
 import validate from '../../middleware/validate.js';
+import { addAdminvalidation } from './admin.validation.js';
 
 const adminRouter=express.Router();
 
 
 
 adminRouter.route('/')
-.post(admin.addAdmin)
+.post(validate(addAdminvalidation), admin.addAdmin)
 .get(admin.getAlladmins)
 
 
