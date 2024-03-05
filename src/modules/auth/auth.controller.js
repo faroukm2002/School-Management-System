@@ -4,6 +4,7 @@ import { catchError } from "../../utils/catchError.js";
 import jwt from "jsonwebtoken"; // Correct import
 import bcrypt from 'bcrypt';
 import { teacherModel } from "../../../database/models/teacher.models.js";
+import { selectModel } from "../../middleware/validationRole.js";
 
 // admin register
 const AdminRegister = catchError(async (req, res, next) => {
@@ -34,10 +35,15 @@ const TeacherRegister = catchError(async (req, res, next) => {
 
 
 
-// login
+// login(admin,teacher,student)
 const login = catchError(async (req, res, next) => {
-    const { email, password } = req.body;
-    let admin = await adminModel.findOne({ email });
+
+
+    const { email, password,role} = req.body;
+        // define userCollection
+        const userCollection = selectModel(role)
+
+    let admin = await userCollection.findOne({ email });
     
     if (!admin || !bcrypt.compareSync(password, admin.password)) {
         return next(new AppError("Invalid email or password", 401)); 
@@ -53,9 +59,9 @@ const login = catchError(async (req, res, next) => {
 });
 
 
-    
+
 export {
     AdminRegister,
     TeacherRegister,
-    login
+    login,
 };
