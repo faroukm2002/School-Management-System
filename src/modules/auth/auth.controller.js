@@ -3,6 +3,7 @@ import { AppError } from "../../utils/AppError.js";
 import { catchError } from "../../utils/catchError.js";
 import jwt from "jsonwebtoken"; // Correct import
 import bcrypt from 'bcrypt';
+import { teacherModel } from "../../../database/models/teacher.models.js";
 
 // admin register
 const AdminRegister = catchError(async (req, res, next) => {
@@ -18,7 +19,15 @@ const AdminRegister = catchError(async (req, res, next) => {
 
 
 
+const TeacherRegister = catchError(async (req, res, next) => {
+    let isTeacher = await teacherModel.findOne({ email: req.body.email });
+    if (isTeacher)  return next(new AppError("Account already exists", 409));
 
+        const teacher = new teacherModel(req.body); 
+        await teacher.save(); // Save teacher instance
+        res.status(201).json({ message: "Done", teacher });
+
+});
 
 
 
@@ -47,5 +56,6 @@ const login = catchError(async (req, res, next) => {
     
 export {
     AdminRegister,
+    TeacherRegister,
     login
 };

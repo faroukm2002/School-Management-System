@@ -1,14 +1,14 @@
 import express from 'express';
 import *as teacher from './teacher.controller.js';
 import validate from '../../middleware/validate.js';
-import { addteachervalidation, deleteteacherValidation, updateteaherValidation } from './teacher.validation.js';
+import {  deleteteacherValidation, updateteaherValidation } from './teacher.validation.js';
 
 const teacherRouter=express.Router();
 
 
 
 teacherRouter.route('/')
-.post(validate(addteachervalidation), teacher.addTeacher)
+// .post(validate(addteachervalidation), teacher.addTeacher)
 .get(teacher.getAllteachers)
 
 // teacherRouter.get('/profile',teacher.GetTeacherProfile)

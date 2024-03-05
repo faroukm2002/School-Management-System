@@ -6,13 +6,13 @@ import { deleteOne } from "../handlers/refactor.js"
 
 
 
-// Add teacher
-const addTeacher = catchError(async(req,res,next) => {
-    const teacher =new teacherModel(req.body)
-    await teacher.save()
-    res.status(201).json({message:"Done",teacher})
+// // Add teacher
+// const addTeacher = catchError(async(req,res,next) => {
+//     const teacher =new teacherModel(req.body)
+//     await teacher.save()
+//     res.status(201).json({message:"Done",teacher})
 
-}) 
+// }) 
 
 
 // Get teacher
@@ -74,7 +74,7 @@ const updateTeacher= catchError(async(req,res,next)=>{
 
 
 export {
- addTeacher,
+//  addTeacher,
  getAllteachers,   
  getTeacherByID,
 //  GetTeacherProfile,

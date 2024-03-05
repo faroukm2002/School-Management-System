@@ -9,6 +9,8 @@ const authRouter=express.Router();
 
 
 authRouter.post('/AdminRegister', auth.AdminRegister)
+authRouter.post('/TeacherRegister', auth.TeacherRegister)
+
 authRouter.post("/login",auth.login)
 
 // .get(auth.getAllauths)

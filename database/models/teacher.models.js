@@ -1,4 +1,5 @@
 import { Schema,Types,model } from "mongoose"
+import bcrypt from 'bcrypt';
 
 const teacherSchema = new Schema({
     
@@ -17,7 +18,32 @@ const teacherSchema = new Schema({
             min: [2, 'minimum length 2 char'],
             max: [20, 'max length 2 char']
         },
-
+        email:{
+            type:String,
+            required: [true, 'description is required'],
+            trim:true,
+            unique: true
+    },
+    password: {
+        type: String,
+        required: [true, 'password is required'],
+    },
+    
+    
+    role: {
+        type: String,
+        enum:['admin','teacher'],
+        default:'techer',
+        required: [true, 'role is required'],
+    
+        
+    },
+    
+    confirmEmail: {
+        type: Boolean,
+        default:false,
+    
+    },
 
 phone:{
     type:Number,
@@ -46,23 +72,7 @@ placeOfBirth:{
 }, 
 
 
-// email: {
-//     type: String,
-//     unique: [true, 'email must be unique value'],
-//     required: [true, 'email is required'],
-// },
-// password: {
-//     type: String,
-//     required: [true, 'password is required'],
-// },
-role: {
-    type: String,
-    enum:['admin','teacher'],
-    default:'techer',
-    // required: [true, 'role is required'],
 
-    
-},
 
 
 // Education Information
@@ -99,6 +109,13 @@ city:{
       },
  
 },{timeStamp:true});
+
+
+// hash password 
+teacherSchema.pre("save", function () {
+    this.password = bcrypt.hashSync(this.password, parseInt(process.env.SALTROUND))
+})
+
 
 export const teacherModel=model('teacher',teacherSchema)
  
