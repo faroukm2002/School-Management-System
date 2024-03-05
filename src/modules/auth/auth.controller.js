@@ -59,7 +59,6 @@ const login = catchError(async (req, res, next) => {
 });
 
 
-
 export {
     AdminRegister,
     TeacherRegister,
