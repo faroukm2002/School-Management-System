@@ -55,7 +55,7 @@ const login = catchError(async (req, res, next) => {
     );
     
     // Success
-    res.status(200).json({ message: "Login successful", token }); // Changed status code and message
+    res.status(200).json({ message: "Login successful",role, token  }); // Changed status code and message
 });
 
 

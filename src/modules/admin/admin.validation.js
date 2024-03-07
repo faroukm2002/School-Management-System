@@ -1,26 +1,28 @@
 import Joi from "joi";
 
-// const addAdminvalidation = Joi.object({
-//   name: Joi.string().min(2).max(20).required(),
-//   email: Joi.string().min(2).max(1000).required(),
-//   password: Joi.string().min(6).max(30),
 
-// });
-
+// UPDATE ADMIN
 const updateAdminValidation = Joi.object({
    
     id: Joi.string().hex().length(24).required(), 
     name: Joi.string().min(2).max(30),
+    email: Joi.string().required().email(),
+
   }
   
 
   )
-
+// DELETE ADMIN
 const deleteAdminValidation = Joi.object({
     id:Joi.string().hex().length(24).required()
 })
+
+// GET ADMINP_PROFILE
+const getAdminProfileByIDValidation = Joi.object({
+  id:Joi.string().hex().length(24).required()
+})
 export { 
-  // addAdminvalidation,
   updateAdminValidation,
-  deleteAdminValidation
+  deleteAdminValidation,
+  getAdminProfileByIDValidation
 };
