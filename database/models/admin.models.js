@@ -25,7 +25,7 @@ password: {
 
 role: {
     type: String,
-    default: 'Admin',
+    default: 'admin',
     required: [true, 'role is required'],
 
 },

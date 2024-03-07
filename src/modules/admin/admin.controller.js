@@ -51,7 +51,7 @@ const updateAdmin= catchError(async(req,res,next)=>{
 }
 )
 
-const deleteAdmin= deleteOne(adminModel,"Teacher")
+const deleteAdmin= deleteOne(adminModel,"Admin")
 
 
 
