@@ -46,7 +46,7 @@ const login = catchError(async (req, res, next) => {
     let admin = await userCollection.findOne({ email });
     
     if (!admin || !bcrypt.compareSync(password, admin.password)) {
-        return next(new AppError("Invalid email or password", 401)); 
+        return next(new AppError("Invalid email or password or role", 401)); 
     }
     
     let token = jwt.sign(
@@ -65,50 +65,44 @@ const login = catchError(async (req, res, next) => {
 // 1- check we have token or not 
 // 2- verfy token
 // 3 if user of this token exist or not 
-// 4- check if this token is the last one or not (change password )
 
-const protectRoutes=catchError(async(req,res,next)=>{
-    let { token } = req.headers;
-    // 1- check we have token or not 
+const allowedto = (roles) => {
+    return catchError(async (req,res, next) => {
 
-    if (!token) return next(new AppError("please provide token", 401))
-    
-    // 2- verfy token
+        let { token } = req.headers;
+        if (!token) return next(new AppError("please provide token", 401))
 
-    let decoded = await jwt.verify(token, process.env.TOKEN_SIGNATURE);
-  console.log(decoded)
-  if (!decoded.id || !decoded?.isLoggedIn) 
-    return next(new AppError("invalid token Payload", 404));
-// 3 if user of this token exist or not 
+        let decoded = await jwt.verify(token, process.env.TOKEN_SIGNATURE);
+        console.log(decoded)      
+          if (!decoded.id || !decoded?.isLoggedIn)  
+           return next(new AppError("invalid token Payload", 401))
 
-const user = await adminModel.findById(decoded.id) ||await teacherModel.findById(decoded.id)
-if (!user) return next(new AppError(" user not found", 404));
-  
+          
+        else {
 
-  
-  
-  req.user = user;
-  next()
-  })
+            const user = await adminModel.findById(decoded.id) ||await teacherModel.findById(decoded.id)
+            if (!user) {
+                res.status(404).json({ message: " validation error ,user not found" })
 
+            } else {
+                if (!roles.includes(user.role)) {
+                    next (new AppError("You are not authorized to access this route. " , 401))
+                } else {
+                    req.user = user
+                    next() 
+                }
+            
+            }
 
-  const allowedto = (...roles) => {
-    // ['admin','user'] b4of mokod wla laa
-    return catchError(async (req, res, next) => {
-      if (!roles.includes(req.user.role)) {
-        return next(new AppError("You are not authorized to access this route. Your role is " + req.user.role, 401));
-      }
-  
-      // User has the required role, continue to the next middleware or route handler
-      next();
-    });
-  };
+        }
 
+    })
+
+}
 
 export {
     AdminRegister,
     TeacherRegister,
     login,
-    protectRoutes,
     allowedto
 };
