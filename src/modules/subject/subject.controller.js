@@ -7,8 +7,8 @@ import { deleteOne } from "../handlers/refactor.js"
 
 // Add Subject
 const addSubject = catchError(async(req,res,next) => {
-    
-    // req.body.Createdby = req.user._id
+    // take createdby from token bta3 admin 
+    req.body.createdby = req.user._id
     
     const subject =new subjectModel(req.body)
     await subject.save()
@@ -43,6 +43,7 @@ const getAllSubjects = catchError(async (req, res, next) => {
 
 
 const updateSubject= catchError(async(req,res,next)=>{
+    req.body.updatedBy = req.user._id
     const{id}=req.params
     const subject=await subjectModel.findByIdAndUpdate(
         id,
