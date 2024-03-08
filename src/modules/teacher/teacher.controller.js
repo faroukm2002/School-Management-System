@@ -2,17 +2,7 @@ import { teacherModel } from "../../../database/models/teacher.models.js"
 import { Apifeatures } from "../../utils/Apifeatures.js"
 import { AppError } from "../../utils/AppError.js"
 import { catchError } from "../../utils/catchError.js"
-import { deleteOne } from "../handlers/refactor.js"
-
-
-
-// // Add teacher
-// const addTeacher = catchError(async(req,res,next) => {
-//     const teacher =new teacherModel(req.body)
-//     await teacher.save()
-//     res.status(201).json({message:"Done",teacher})
-
-// }) 
+import { deleteOne } from "../handlers/refactor.js" 
 
 
 // Get teacher
@@ -25,9 +15,8 @@ const getAllteachers=catchError(async(req,res,next)=>{
     })
 
 
-  //  Get Teacher BY_ID
-  
-    const getTeacherByID=catchError(async(req,res,next)=>{
+  //  Get TeacherProfile BY_ID
+    const getTeacherProfileByID=catchError(async(req,res,next)=>{
 
         const teacher=await teacherModel.findById(req.params.id)
         if (!teacher) {
@@ -41,19 +30,11 @@ const getAllteachers=catchError(async(req,res,next)=>{
      
 
 
-    // //  Get Teacher profile
-    // const GetTeacherProfile = catchError(async (req, res, next) => {
-    //     const teacher = await teacherModel.findById(req.user._id); 
-    //     console.log(teacher);
-    //     if (!teacher) {
-    //         next(new AppError("Teacher not found", 404));
-    //     } else {
-    //         res.status(200).json({ message: "This is the teacher profile", teacher });
-    //     }
-    // });
+  
     
 
 
+//  Update Teacher profile
 const updateTeacher= catchError(async(req,res,next)=>{
     const{id}=req.params
     const teacher=await teacherModel.findByIdAndUpdate(
@@ -68,16 +49,15 @@ const updateTeacher= catchError(async(req,res,next)=>{
 )
 
 
+
  const deleteTeacher= deleteOne(teacherModel,"Teacher")
 
 
 
 
 export {
-//  addTeacher,
  getAllteachers,   
- getTeacherByID,
-//  GetTeacherProfile,
+ getTeacherProfileByID,
  updateTeacher,
  deleteTeacher
 }
