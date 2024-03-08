@@ -15,6 +15,6 @@ teacherRouter.route('/')
 teacherRouter.route('/:id')
 .get( validate(getAdminProfileByIDValidation), allowedto('teacher'), teacher.getTeacherProfileByID)
 .put(validate(updateteaherValidation), allowedto('teacher'), teacher.updateTeacher)
-.delete( validate(deleteteacherValidation),allowedto('admin,teacher'), teacher.deleteTeacher)
+.delete( validate(deleteteacherValidation),allowedto('admin','teacher'), teacher.deleteTeacher)
 
 export default teacherRouter
