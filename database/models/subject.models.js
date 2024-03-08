@@ -26,11 +26,11 @@ duration: {
 createdby: {
     type: Schema.Types.ObjectId,
     ref: 'admin',
-    // required: true
+    required: true
 },
 updatedBy: {
     type: Schema.Types.ObjectId,
-    ref: 'Admin',
+    ref: 'admin',
 },
 teachers: {
     type: Schema.Types.ObjectId,
