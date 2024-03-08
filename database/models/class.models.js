@@ -21,9 +21,12 @@ const classSchema = new Schema({
 createdby: {
     type: Schema.Types.ObjectId,
     ref: 'admin',
-    // required: true
+    required: true
 },
-
+updatedBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'admin',
+},
 teachers: {
     type: Schema.Types.ObjectId,
     ref: 'teacher',
@@ -34,6 +37,10 @@ subjects: {
     ref: 'subject',
 },
 
+student: {
+    type: Schema.Types.ObjectId,
+    ref: 'student',
+},
 
  
 },{timeStamp:true});

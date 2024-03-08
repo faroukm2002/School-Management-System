@@ -8,8 +8,10 @@ import { deleteOne } from "../handlers/refactor.js"
 // Add class
 const addClassLevel = catchError(async(req,res,next) => {
     
-    // req.body.Createdby = req.user._id
-    
+    req.body.createdby = req.user._id
+    const ExistClassLevel = await classModel.findOne({ name:req.body.name })
+    if (ExistClassLevel) return next(new AppError('Classlevel Aready Exist',404))
+
     const ClassLevel =new classModel(req.body)
     await ClassLevel.save()
     res.status(201).json({message:"Done",ClassLevel})
@@ -44,6 +46,8 @@ const getAllClasslevels = catchError(async (req, res, next) => {
 
 const updateClasslevel= catchError(async(req,res,next)=>{
     const{id}=req.params
+    req.body.updatedBy = req.user._id
+
     const Classlevel=await classModel.findByIdAndUpdate(
         id,
         req.body,
