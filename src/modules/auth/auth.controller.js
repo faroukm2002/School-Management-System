@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt';
 import { teacherModel } from "../../../database/models/teacher.models.js";
 import { selectModel } from "../../middleware/validationRole.js";
 import { sendEmail } from "../../../services/emails.js";
+import { studentModel } from "../../../database/models/student.models.js";
 
 // admin register
 const AdminRegister = catchError(async (req, res, next) => {
@@ -43,7 +44,23 @@ const link=`${process.env.BASEURL}/api/v1/auth/confirmEmail/${token}`
 });
 
 
+// StudentRegister
+const StudentRegister = catchError(async (req, res, next) => {
+    let {email} = req.body
 
+    let isStudent = await studentModel.findOne({ email });
+    if (isStudent)  return next(new AppError("Account already exists", 409));
+
+    const student = new studentModel(req.body); 
+    const token = await jwt.sign({ id: student._id,role: student.role}, process.env.emailToken)
+const link=`${process.env.BASEURL}/api/v1/auth/confirmEmail/${token}`
+    sendEmail({email,link}); // Pass the email address from request body
+    await student.save(); // Save student instance
+    res.status(201).json({ message: "Done", student });
+
+});
+
+ 
 
 
 
@@ -84,13 +101,13 @@ const confirmEmail = catchError(async (req, res, next) => {
     const decoded= await jwt.verify(token,process.env.emailToken)
 
     if(!decoded )
-      return 
-     next (new (AppError("invalid pay load or it is aready confirmed",400)))
+      return  next (new (AppError("invalid pay load or it is aready confirmed",400)))
    
+       
       const  userCollection = selectModel(decoded.role)
+ const User= await userCollection.findOneAndUpdate({_id:decoded.id,confirmEmail:false},{confirmEmail:true})
+  return res.status(200).json({message:"email confirmed successfuly",UserId:User._id})
 
-      const user= await userCollection.findOneAndUpdate({_id:decoded.id,confirmEmail:false},{confirmEmail:true})
-               res.status(200).json({ message: "email confirmed successfuly",UserId:user._id }); 
 });
 
 
@@ -140,6 +157,7 @@ const allowedto = (roles) => {
 export {
     AdminRegister,
     TeacherRegister,
+    StudentRegister,
     login,
     confirmEmail,
     allowedto
