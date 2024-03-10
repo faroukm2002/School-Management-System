@@ -25,14 +25,20 @@ const AdminRegister = catchError(async (req, res, next) => {
 
  
 
+// TeacherRegister
 
 const TeacherRegister = catchError(async (req, res, next) => {
-    let isTeacher = await teacherModel.findOne({ email: req.body.email });
+    let {email} = req.body
+
+    let isTeacher = await teacherModel.findOne({ email });
     if (isTeacher)  return next(new AppError("Account already exists", 409));
 
-        const teacher = new teacherModel(req.body); 
-        await teacher.save(); // Save teacher instance
-        res.status(201).json({ message: "Done", teacher });
+    const teacher = new teacherModel(req.body); 
+    const token = await jwt.sign({ id: teacher._id,role: teacher.role}, process.env.emailToken)
+const link=`${process.env.BASEURL}/api/v1/auth/confirmEmail/${token}`
+    sendEmail({email,link}); // Pass the email address from request body
+    await teacher.save(); // Save teacher instance
+    res.status(201).json({ message: "Done", teacher });
 
 });
 
@@ -78,11 +84,13 @@ const confirmEmail = catchError(async (req, res, next) => {
     const decoded= await jwt.verify(token,process.env.emailToken)
 
     if(!decoded )
-      return  next (new (AppError("invalid pay load or it is aready confirmed",400)))
+      return 
+     next (new (AppError("invalid pay load or it is aready confirmed",400)))
    
-       
-       await adminModel.findOneAndUpdate({ _id: decoded.id, confirmEmail: false }, { confirmEmail: true });
-         res.status(200).json({ message: "Done" }); 
+      const  userCollection = selectModel(decoded.role)
+
+      const user= await userCollection.findOneAndUpdate({_id:decoded.id,confirmEmail:false},{confirmEmail:true})
+               res.status(200).json({ message: "email confirmed successfuly",UserId:user._id }); 
 });
 
 

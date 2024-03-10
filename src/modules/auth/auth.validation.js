@@ -6,8 +6,8 @@ const AdminRegisterValidation = Joi.object({
   password: Joi.string().required(),
 
 });
-
-const TeacherRegisterValidation = Joi.object({
+// student or teacher
+const UserRegisterValidation = Joi.object({
    firstname: Joi.string().min(2).max(20).required(),
   lastname: Joi.string().min(2).max(20).required(),
   email: Joi.string().required().email(),
@@ -31,6 +31,7 @@ const TeacherRegisterValidation = Joi.object({
   
 
   )
+  
 
 const Login = Joi.object({
   email: Joi.string().required().email(),
@@ -38,6 +39,6 @@ const Login = Joi.object({
   role: Joi.string().required(),})
 export { 
   AdminRegisterValidation,
-  TeacherRegisterValidation,
+  UserRegisterValidation,
   Login
 };
