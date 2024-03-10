@@ -1,4 +1,5 @@
 import { adminModel } from "../../database/models/admin.models.js";
+import { studentModel } from "../../database/models/student.models.js";
 import { teacherModel } from "../../database/models/teacher.models.js";
 
  const selectModel = (role) => {
