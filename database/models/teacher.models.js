@@ -106,7 +106,10 @@ city:{
         type:Schema.ObjectId,
         ref:"subject",
       },
- 
+      classLevel:{
+        type:Schema.ObjectId,
+        ref:"class",
+      },
 },{timeStamp:true});
 
 
