@@ -134,7 +134,7 @@ const allowedto = (roles) => {
           
         else {
 
-            const user = await adminModel.findById(decoded.id) ||await teacherModel.findById(decoded.id)
+            const user = await adminModel.findById(decoded.id) ||await teacherModel.findById(decoded.id)||await studentModel.findById(decoded.id)
             if (!user) {
                 res.status(404).json({ message: " validation error ,user not found" })
 
