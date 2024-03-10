@@ -15,7 +15,8 @@ const AdminRegister = catchError(async (req, res, next) => {
 
             const admin = new adminModel(req.body); 
             const token = await jwt.sign({ id: admin._id,role: admin.role}, process.env.emailToken)
-            sendEmail({email,token}); // Pass the email address from request body
+        const link=`${process.env.BASEURL}/api/v1/auth/confirmEmail/${token}`
+            sendEmail({email,link}); // Pass the email address from request body
             await admin.save(); // Save admin instance
 
             res.status(201).json({ message: "Done", admin });

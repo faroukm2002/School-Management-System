@@ -15,7 +15,7 @@ export const  sendEmail=async(options)=>{
         from: '"Route👻" <process.env.nodeMailerEmail>', // sender address
         to: options.email, // list of receivers
         subject: "Hello ✔", // Subject line
-        html: htmlCode(`${process.env.BASEURL}/api/v1/auth/confirmEmail/${options.token}`) // html body
+        html: htmlCode(options.link) // html body
     });
     
       console.log("Message sent: %s", info.messageId);
