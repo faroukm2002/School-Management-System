@@ -48,14 +48,16 @@ const login = catchError(async (req, res, next) => {
         // define userCollection
         const userCollection = selectModel(role)
 
-    let admin = await userCollection.findOne({ email });
+    let user = await userCollection.findOne({ email });
     
-    if (!admin || !bcrypt.compareSync(password, admin.password)) {
+    if (!user || !bcrypt.compareSync(password, user.password)  ) 
         return next(new AppError("Invalid email or password or role", 401)); 
-    }
     
+        if(!user.confirmEmail)  
+          return next(new AppError("confirm you email frist", 403)); 
+
     let token = jwt.sign(
-        { name: admin.name, email: admin.email, id: admin._id, role: admin.role, isLoggedIn: true },
+        { name: user.name, email: user.email, id: user._id, role: user.role, isLoggedIn: true },
         process.env.TOKEN_SIGNATURE
     );
     
