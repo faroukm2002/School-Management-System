@@ -49,6 +49,28 @@ const updateStudent= catchError(async(req,res,next)=>{
 )
 
 
+//  Update studentData by admin
+const updateStudentDataByAdmin = catchError(async (req, res, next) => {
+    const { id } = req.params;
+    const { subject, AcademicYear, program, classLevel, IsSuspended, IsWithdrawn } = req.body;
+    
+    const student = await studentModel.findById(id);
+    if (!student) return next(new AppError('Student not found', 404));
+
+    const update = {
+        subject,
+        // AcademicYear,
+        // program,
+        // IsSuspended,
+        // IsWithdrawn,
+        $addToSet: { classLevel } 
+    };
+
+    const updatedStudent = await studentModel.findByIdAndUpdate(id, update, { new: true });
+
+    res.status(201).json({ message: "Student data updated successfully", update: updatedStudent });
+});
+
 
  const deleteStudent= deleteOne(studentModel,"Student")
 
@@ -59,6 +81,7 @@ export {
  getAllStudents,   
  getStudentProfileByID,
  updateStudent,
+ updateStudentDataByAdmin,
  deleteStudent
 }
 
