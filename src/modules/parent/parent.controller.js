@@ -6,13 +6,16 @@ import { deleteOne } from "../handlers/refactor.js"
 
 
 // Get parent
-const getAllParents=catchError(async(req,res,next)=>{
-    let apifeatures= new Apifeatures( parentModel.find(),req.query)
-    .pagination().search()
-    // created
-    const parents = await apifeatures.mongooseQuery
-        res.status(201).json({ message: 'Done this is parents list', page:apifeatures.page, parents });
-    })
+const getAllParents = catchError(async (req, res, next) => {
+    let apifeatures = new Apifeatures(parentModel.find().populate('children'), req.query)
+        .pagination()
+        .search();
+    
+    // Execute the query
+    const parents = await apifeatures.mongooseQuery;
+
+    res.status(200).json({ message: 'Here is the list of parents with children details', page: apifeatures.page, parents });
+});
 
 
 

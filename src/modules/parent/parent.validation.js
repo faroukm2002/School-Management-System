@@ -22,7 +22,6 @@ const deleteParentValidation = Joi.object({
 })
 
 export { 
-  getParentProfileByIdValidation,
   updateParentValidation,
   deleteParentValidation
 };

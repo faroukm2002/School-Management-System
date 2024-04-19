@@ -48,6 +48,21 @@ const TeacherRegisterValidation = Joi.object({
  
    }
    )
+     //ParentRegisterValidation
+  const ParentRegisterValidation = Joi.object({
+    firstname: Joi.string().min(2).max(20).required(),
+   lastname: Joi.string().min(2).max(20).required(),
+   email: Joi.string().required().email(),
+   password: Joi.string().required(),
+   role: Joi.string().required(),
+ 
+   phone: Joi.number().required(),
+   Address: Joi.string().min(2).max(50).required(),
+   role: Joi.string().valid("admin", "parent").default("parent"),
+   children: Joi.string()
+ 
+   }
+   )
 const Login = Joi.object({
   email: Joi.string().required().email(),
   password: Joi.string().required(),
@@ -56,5 +71,6 @@ export {
   AdminRegisterValidation,
   TeacherRegisterValidation,
   StudentRegisterValidation,
+  ParentRegisterValidation,
   Login
 };

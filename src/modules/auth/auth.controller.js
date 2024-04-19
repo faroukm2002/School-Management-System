@@ -7,6 +7,7 @@ import { teacherModel } from "../../../database/models/teacher.models.js";
 import { selectModel } from "../../middleware/validationRole.js";
 import { sendEmail } from "../../../services/emails.js";
 import { studentModel } from "../../../database/models/student.models.js";
+import { parentModel } from "../../../database/models/parent.models.js";
 
 // admin register
 const AdminRegister = catchError(async (req, res, next) => {
@@ -61,7 +62,21 @@ const link=`${process.env.BASEURL}/api/v1/auth/confirmEmail/${token}`
 });
 
  
+// ParentRegister
+const ParentRegister = catchError(async (req, res, next) => {
+    let {email} = req.body
 
+    let isParent = await parentModel.findOne({ email });
+    if (isParent)  return next(new AppError("Account already exists", 409));
+
+    const Parent = new parentModel(req.body); 
+    const token = await jwt.sign({ id: Parent._id,role: Parent.role}, process.env.emailToken)
+const link=`${process.env.BASEURL}/api/v1/auth/confirmEmail/${token}`
+    sendEmail({email,link}); // Pass the email address from request body
+    await Parent.save(); // Save Parent instance
+    res.status(201).json({ message: "Done", Parent });
+
+});
 
 
 // login(admin,teacher,student)
@@ -134,7 +149,10 @@ const allowedto = (roles) => {
           
         else {
 
-            const user = await adminModel.findById(decoded.id) ||await teacherModel.findById(decoded.id)||await studentModel.findById(decoded.id)
+            const user = await adminModel.findById(decoded.id)
+             ||await teacherModel.findById(decoded.id)
+             ||await studentModel.findById(decoded.id)
+            ||await parentModel.findById(decoded.id)
             if (!user) {
                 res.status(404).json({ message: " validation error ,user not found" })
 
@@ -160,5 +178,6 @@ export {
     StudentRegister,
     login,
     confirmEmail,
-    allowedto
+    allowedto,
+    ParentRegister
 };

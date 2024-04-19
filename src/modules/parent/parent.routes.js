@@ -1,20 +1,20 @@
 import express from 'express';
 import *as parent from './parent.controller.js';
 import validate from '../../middleware/validate.js';
-import {  deleteParentValidation, updateParentValidation,  } from './student.validation.js';
+import { deleteParentValidation, updateParentValidation } from './parent.validation.js';
 import { allowedto } from '../auth/auth.controller.js';
 
 const parentRouter=express.Router();
 
 
 
-studentRouter.route('/')
-.get(student.getAllStudents)
+parentRouter.route('/')
+.get(parent.getAllParents)
 
 
-studentRouter.route('/:id')
-.put(validate(updateParentValidation), allowedto('parent'),parent.updateStudent)
+parentRouter.route('/:id')
+.put(validate(updateParentValidation), allowedto('parent'), parent.updateParent)
 
-.delete( validate(deleteParentValidation),allowedto('admin','parent'),parent.deleteStudent)
+.delete( validate(deleteParentValidation),allowedto('admin','parent'), parent.deleteparent)
 
 export default parentRouter
