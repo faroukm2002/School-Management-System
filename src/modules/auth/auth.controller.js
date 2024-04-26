@@ -8,7 +8,6 @@ import { selectModel } from "../../middleware/validationRole.js";
 import { sendEmail } from "../../../services/emails.js";
 import { studentModel } from "../../../database/models/student.models.js";
 import { parentModel } from "../../../database/models/parent.models.js";
-import { request } from "express";
 
 // admin register
 const AdminRegister = catchError(async (req, res, next) => {
