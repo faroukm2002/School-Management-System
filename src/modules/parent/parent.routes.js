@@ -1,7 +1,7 @@
 import express from 'express';
 import *as parent from './parent.controller.js';
 import validate from '../../middleware/validate.js';
-import { deleteParentValidation, updateParentValidation } from './parent.validation.js';
+   import { deleteParentValidation, updateParentValidation } from './parent.validation.js';
 import { allowedto } from '../auth/auth.controller.js';
 
 const parentRouter=express.Router();

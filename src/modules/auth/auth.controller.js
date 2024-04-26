@@ -8,6 +8,7 @@ import { selectModel } from "../../middleware/validationRole.js";
 import { sendEmail } from "../../../services/emails.js";
 import { studentModel } from "../../../database/models/student.models.js";
 import { parentModel } from "../../../database/models/parent.models.js";
+import { request } from "express";
 
 // admin register
 const AdminRegister = catchError(async (req, res, next) => {
@@ -30,6 +31,8 @@ const AdminRegister = catchError(async (req, res, next) => {
 // TeacherRegister
 
 const TeacherRegister = catchError(async (req, res, next) => {
+    req.body.image=req.file.filename
+
     let {email} = req.body
 
     let isTeacher = await teacherModel.findOne({ email });
@@ -47,8 +50,9 @@ const link=`${process.env.BASEURL}/api/v1/auth/confirmEmail/${token}`
 
 // StudentRegister
 const StudentRegister = catchError(async (req, res, next) => {
+   
+    req.body.image=req.file.filename
     let {email} = req.body
-
     let isStudent = await studentModel.findOne({ email });
     if (isStudent)  return next(new AppError("Account already exists", 409));
 
