@@ -19,10 +19,9 @@ const addAcademicTerm = catchError(async(req,res,next) => {
 }) 
 
 
-// Get AcademicTerm
+// Get AcademicTerms
 const getAllAcademicTerms = catchError(async (req, res, next) => {
-    let AcademicTerm = await classModel.find();
-    // created
+    let AcademicTerm = await academicTermModel.find();
       res.status(201).json({ message: "Done this is AcademicTerm", AcademicTerm });
   });
 
@@ -31,7 +30,7 @@ const getAllAcademicTerms = catchError(async (req, res, next) => {
   
     const getAcademicTermByID=catchError(async(req,res,next)=>{
 
-        const AcademicTerm=await classModel.findById(req.params.id)
+        const AcademicTerm=await academicTermModel.findById(req.params.id)
         !AcademicTerm && next(new AppError('AcademicTerm not found',404))
 
         AcademicTerm &&   res.status(201).json({message:"this is AcademicTerm",AcademicTerm})
