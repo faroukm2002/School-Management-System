@@ -59,7 +59,7 @@ const updateAcademicTerm= catchError(async(req,res,next)=>{
 )
 
 
- const deleteAcademicTerm= deleteOne(academicTermModel,"AcademicTerm")
+ const deleteAcademicTerm= deleteOne(academicTermModel,"AcademicTerm")  
 
 
 
