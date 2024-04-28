@@ -33,4 +33,4 @@ updatedBy: {
  
 },{timeStamp:true});
 
-export const academicTermModel=model('academicterm',academicTermSchema)
+export const academicTermModel=model('academicTerm',academicTermSchema)

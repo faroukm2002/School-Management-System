@@ -44,7 +44,7 @@ academicYear:{
 },
 academicTerm: {
     type: Schema.Types.ObjectId,
-    ref: "academicterm"
+    ref: "academicTerm"
 },
 teachers: {
     type: Schema.Types.ObjectId,
