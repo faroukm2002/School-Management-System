@@ -45,6 +45,7 @@ const getAllAcademicTerms = catchError(async (req, res, next) => {
 
 const updateAcademicTerm= catchError(async(req,res,next)=>{
     const{id}=req.params
+    req.body.updatedBy = req.user._id
 
     const AcademicTerm=await academicTermModel.findByIdAndUpdate(
         id,

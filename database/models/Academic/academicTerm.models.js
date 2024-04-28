@@ -25,6 +25,11 @@ createdby: {
     required: true
 },
 
+updatedBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'admin',
+    required: true
+},
 
  
 },{timeStamp:true});
