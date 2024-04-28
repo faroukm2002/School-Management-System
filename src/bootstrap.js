@@ -1,5 +1,6 @@
 import { globalError } from "./middleware/globalErrorMiddleware.js";
 import academicTermRouter from "./modules/academicTerm/academicTerm.routes.js";
+import academicYearRouter from "./modules/academicYear/academicYear.routes.js";
 import adminRouter from "./modules/admin/admin.routes.js";
 import authRouter from "./modules/auth/auth.routes.js";
 import ClassLevelRouter from "./modules/class/class.routes.js";
@@ -27,6 +28,7 @@ export function bootstrap(app){
     app.use("/api/v1/student",studentRouter)
     app.use("/api/v1/parent",parentRouter)
     app.use("/api/v1/academicTerm",academicTermRouter)
+    app.use("/api/v1/academicYear",academicYearRouter)
 
   // url error
   app.use("*", (req, res, next) => {
