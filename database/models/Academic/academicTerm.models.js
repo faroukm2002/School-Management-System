@@ -28,7 +28,6 @@ createdby: {
 updatedBy: {
     type: Schema.Types.ObjectId,
     ref: 'admin',
-    required: true
 },
 
  
