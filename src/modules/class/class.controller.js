@@ -1,3 +1,4 @@
+import { adminModel } from "../../../database/models/admin.models.js";
 import { classModel } from "../../../database/models/class.models.js"
 import { AppError } from "../../utils/AppError.js"
 import { catchError } from "../../utils/catchError.js"
@@ -6,17 +7,22 @@ import { deleteOne } from "../handlers/refactor.js"
 
 
 // Add class
-const addClassLevel = catchError(async(req,res,next) => {
-    
-    req.body.createdby = req.user._id
-    const ExistClassLevel = await classModel.findOne({ name:req.body.name })
-    if (ExistClassLevel) return next(new AppError('Classlevel Aready Exist',404))
+const addClassLevel = catchError(async(req, res, next) => {
+    req.body.createdby = req.user._id;
+    const existClassLevel = await classModel.findOne({ name: req.body.name });
+    if (existClassLevel) return next(new AppError('ClassLevel Already Exists', 404));
 
-    const ClassLevel =new classModel(req.body)
-    await ClassLevel.save()
-    res.status(201).json({message:"Done",ClassLevel})
+    const ClassLevelCreated = await classModel.create(req.body);
+    const admin = await adminModel.findById(req.user._id);
+    admin.classLevel.push(ClassLevelCreated._id);
+    await admin.save();
+   
+     res.status(201).json({ message: "Done", ClassLevelCreated });
+});
 
-}) 
+
+
+
 
 
 // Get Classlevel

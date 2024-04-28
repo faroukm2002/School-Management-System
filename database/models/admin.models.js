@@ -34,10 +34,10 @@ const adminSchema = new Schema({
         default:false,
 
     },
-    classLevel: {
+    classLevel: [{
         type: Schema.Types.ObjectId,
         ref: "class"
-    },
+    }],
     academicYears:[{
         type: Schema.Types.ObjectId,
         ref: "academicYear"
@@ -46,14 +46,14 @@ const adminSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "academicTerm"
     }],
-    teachers: {
+    teachers: [{
         type: Schema.Types.ObjectId,
         ref: "teacher"
-    },
-    students: {
+    }],
+    students: [{
         type: Schema.Types.ObjectId,
         ref: "student"
-    },
+    }],
     // progrm: [{
     //     type: Schema.Types.ObjectId,
     //     ref: "Program"
