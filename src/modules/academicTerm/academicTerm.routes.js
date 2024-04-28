@@ -10,7 +10,7 @@ const academicTermRouter=express.Router();
 
 academicTermRouter.route('/')
 .post(validate(addAcademicTermvalidation), allowedto('admin'), academicTerm.addAcademicTerm)
-.get(academicTerm.getAllAcademicTerms)
+.get(allowedto('admin'),academicTerm.getAllAcademicTerms)
 
 academicTermRouter.route('/:id')
 .get(allowedto('admin'),academicTerm.getAcademicTermByID)
