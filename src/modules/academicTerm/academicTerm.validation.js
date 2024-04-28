@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 const addAcademicTermvalidation = Joi.object({
-  name: Joi.string().min(2).max(20).required(),
+  name: Joi.string().min(2).max(50).required(),
   description: Joi.string().min(2).max(1000).required(),
   duration: Joi.string().min(2).max(1000).required(),
 

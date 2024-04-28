@@ -1,23 +1,23 @@
 import { academicTermModel } from "../../../database/models/Academic/academicTerm.models.js"
+import { adminModel } from "../../../database/models/admin.models.js"
 import { AppError } from "../../utils/AppError.js"
 import { catchError } from "../../utils/catchError.js"
 import { deleteOne } from "../handlers/refactor.js"
 
 
+//  Add AcademicTerm
+const addAcademicTerm = catchError(async(req, res, next) => {
+    req.body.createdby = req.user._id;
+    const existAcademicTerm = await academicTermModel.findOne({ name: req.body.name });
+    if (existAcademicTerm) return next(new AppError('AcademicTerm Already Exists', 404));
 
-// Add AcademicTerm
-const addAcademicTerm = catchError(async(req,res,next) => {
-    
-    req.body.createdby = req.user._id
-    const ExistAcademicTerm = await academicTermModel.findOne({ name:req.body.name })
-    if (ExistAcademicTerm) return next(new AppError('AcademicTerm Aready Exist',404))
-
-    const AcademicTerm =new academicTermModel(req.body)
-    await AcademicTerm.save()
-    res.status(201).json({message:"Done",AcademicTerm})
-
-}) 
-
+    const academicTermCreated = await academicTermModel.create(req.body);
+    const admin = await adminModel.findById(req.user._id);
+    admin.academicTerms.push(academicTermCreated._id);
+    await admin.save();
+   
+     res.status(201).json({ message: "Done", academicTermCreated });
+});
 
 // Get AcademicTerms
 const getAllAcademicTerms = catchError(async (req, res, next) => {

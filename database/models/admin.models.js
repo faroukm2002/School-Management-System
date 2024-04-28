@@ -16,51 +16,51 @@ const adminSchema = new Schema({
         required: [true, 'description is required'],
         trim:true,
         unique: true
-},
-password: {
-    type: String,
-    required: [true, 'password is required'],
-},
+    },
+    password: {
+        type: String,
+        required: [true, 'password is required'],
+    },
 
 
-role: {
-    type: String,
-    default: 'admin',
-    required: [true, 'role is required'],
+    role: {
+        type: String,
+        default: 'admin',
+        required: [true, 'role is required'],
 
-},
-confirmEmail: {
-    type: Boolean,
-    default:false,
+    },
+    confirmEmail: {
+        type: Boolean,
+        default:false,
 
-},
-classLevel: {
-    type: Schema.Types.ObjectId,
-    ref: "class"
-},
-academicYear:{
-    type: Schema.Types.ObjectId,
-    ref: "academicYear"
-},
-academicTerm: {
-    type: Schema.Types.ObjectId,
-    ref: "academicTerm"
-},
-teachers: {
-    type: Schema.Types.ObjectId,
-    ref: "teacher"
-},
-studens: {
-    type: Schema.Types.ObjectId,
-    ref: "student"
-},
-// progrm: [{
-//     type: Schema.Types.ObjectId,
-//     ref: "Program"
-// }],
+    },
+    classLevel: {
+        type: Schema.Types.ObjectId,
+        ref: "class"
+    },
+    academicYears:[{
+        type: Schema.Types.ObjectId,
+        ref: "academicYear"
+    }],
+    academicTerms: [{  
+        type: Schema.Types.ObjectId,
+        ref: "academicTerm"
+    }],
+    teachers: {
+        type: Schema.Types.ObjectId,
+        ref: "teacher"
+    },
+    students: {
+        type: Schema.Types.ObjectId,
+        ref: "student"
+    },
+    // progrm: [{
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Program"
+    // }],
 
 }, {
-timestamps: true
+    timestamps: true
 })
 
 // hash password 

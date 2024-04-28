@@ -18,18 +18,18 @@ const getAllAdmins=catchError(async(req,res,next)=>{
   })
 
 
-  //  Get adminProfile BY_ID
-  const getAdminProfileByID = catchError(async (req, res, next) => {
-    const admin = await adminModel
-        .findById(req.user._id)
-        .select("name email role")
-        .populate("academicTerm");
-    
-    if (!admin) {
-        next(new AppError("Admin not found", 404));
-    } else {
-        res.status(201).json({ message: "Done. This is admin", admin });
-    }
+// Get adminProfile BY_ID
+const getAdminProfileByID = catchError(async (req, res, next) => {
+  const admin = await adminModel
+      .findById(req.user._id)
+      .select("name email role")
+      .populate("academicTerms"); // Change "academicTerms" to "academicTerm"
+  
+  if (!admin) {
+      return next(new AppError("Admin not found", 404));
+  } else {
+      return res.status(200).json({ message: "Done. This is admin", admin });
+  }
 });
 
  

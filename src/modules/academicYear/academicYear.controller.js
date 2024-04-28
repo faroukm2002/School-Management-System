@@ -1,4 +1,5 @@
 import { academicYearModel } from "../../../database/models/Academic/academicYear.models.js"
+import { adminModel } from "../../../database/models/admin.models.js";
 import { AppError } from "../../utils/AppError.js"
 import { catchError } from "../../utils/catchError.js"
 import { deleteOne } from "../handlers/refactor.js"
@@ -6,17 +7,18 @@ import { deleteOne } from "../handlers/refactor.js"
 
 
 // Add AcademicYear
-const addAcademicYear = catchError(async(req,res,next) => {
-    
-    req.body.createdby = req.user._id
-    const ExistAcademicYear = await academicYearModel.findOne({ name:req.body.name })
-    if (ExistAcademicYear) return next(new AppError('AcademicYear Aready Exist',404))
+const addAcademicYear = catchError(async(req, res, next) => {
+    req.body.createdby = req.user._id;
+    const existAcademicYear = await academicYearModel.findOne({ name: req.body.name });
+    if (existAcademicYear) return next(new AppError('AcademicYear Already Exists', 404));
 
-    const AcademicYear =new academicYearModel(req.body)
-    await AcademicYear.save()
-    res.status(201).json({message:"Done",AcademicYear})
-
-}) 
+    const academicYearCreated = await academicYearModel.create(req.body);
+    const admin = await adminModel.findById(req.user._id);
+    admin.academicYears.push(academicYearCreated._id);
+    await admin.save();
+   
+     res.status(201).json({ message: "Done", academicYearCreated });
+});
 
 
 // Get AcademicYears
