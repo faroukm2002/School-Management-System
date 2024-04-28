@@ -38,14 +38,14 @@ classLevel: {
     type: Schema.Types.ObjectId,
     ref: "class"
 },
-// AcademicYear:{
-//     type: Schema.Types.ObjectId,
-//     ref: "AcademicYear"
-// },
-// Academicterm: {
-//     type: Schema.Types.ObjectId,
-//     ref: "Academicterm"
-// },
+academicYear:{
+    type: Schema.Types.ObjectId,
+    ref: "academicYear"
+},
+academicTerm: {
+    type: Schema.Types.ObjectId,
+    ref: "academicterm"
+},
 teachers: {
     type: Schema.Types.ObjectId,
     ref: "teacher"

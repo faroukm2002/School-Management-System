@@ -10,7 +10,7 @@ const adminRouter=express.Router();
 
 adminRouter.route('/')
 // .post(validate(addAdminvalidation), admin.addAdmin)
-.get( admin.getAlladmins)
+.get( admin.getAllAdmins)
 
 
 adminRouter.route('/:id')

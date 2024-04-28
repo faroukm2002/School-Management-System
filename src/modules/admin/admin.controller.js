@@ -1,4 +1,5 @@
 import { adminModel } from "../../../database/models/admin.models.js"
+import { Apifeatures } from "../../utils/Apifeatures.js"
 import { AppError } from "../../utils/AppError.js"
 import { catchError } from "../../utils/catchError.js"
 import { deleteOne } from "../handlers/refactor.js"
@@ -7,27 +8,30 @@ import { deleteOne } from "../handlers/refactor.js"
 
 
 
-// Get admin
-const getAlladmins=catchError(async(req,res,next)=>{
-    let admin = await adminModel.find();
-
-      res.status(200).json({ message: "Done this is admins", admin });
-    });
-
+// Get Admins
+const getAllAdmins=catchError(async(req,res,next)=>{
+  let apifeatures= new Apifeatures( adminModel.find(),req.query)
+  .pagination().search()
+  // created
+  const admins = await apifeatures.mongooseQuery
+      res.status(201).json({ message: 'Done this is Adminss list', page:apifeatures.page, admins });
+  })
 
 
   //  Get adminProfile BY_ID
-  const getAdminProfileByID=catchError(async(req,res,next)=>{
-
-    const admin = await adminModel.findById(req.user._id)
-if (!admin) {
-        next(new AppError(" admin not found",404))
+  const getAdminProfileByID = catchError(async (req, res, next) => {
+    const admin = await adminModel
+        .findById(req.user._id)
+        .select("name email role")
+        .populate("academicTerm");
+    
+    if (!admin) {
+        next(new AppError("Admin not found", 404));
     } else {
-        res.status(201).json({ message: " Done this is admin", admin})
-
+        res.status(201).json({ message: "Done. This is admin", admin });
     }
+});
 
-})
  
 // update Admin
 const updateAdmin= catchError(async(req,res,next)=>{
@@ -56,7 +60,7 @@ const deleteAdmin= deleteOne(adminModel,"Admin")
  
 
 export {
- getAlladmins,
+  getAllAdmins,
  getAdminProfileByID,
  updateAdmin,
  deleteAdmin
