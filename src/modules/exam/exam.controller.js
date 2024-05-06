@@ -1,4 +1,4 @@
-import { examModel } from "../../../database/models/Academic/exam.models copy.js";
+import { examModel } from "../../../database/models/Academic/exam.models.js";
 import { teacherModel } from "../../../database/models/teacher.models.js";
 import { AppError } from "../../utils/AppError.js"
 import { catchError } from "../../utils/catchError.js"
