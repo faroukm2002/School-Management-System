@@ -8,15 +8,15 @@ import { deleteOne } from "../handlers/refactor.js"
 //  Add Exam
 const addExam = catchError(async(req, res, next) => {
     req.body.createdby = req.user._id;
-    const existTeacher = await teacherModel.findById(req.user._id);
-    if (!existTeacher) return next(new AppError('teacher not found', 404));
+    const teacher = await teacherModel.findById(req.user._id);
+    if (!teacher) return next(new AppError('teacher not found', 404));
 
     const existExam = await examModel.findOne({name:req.body.name});
     if (existExam) return next(new AppError('Exam already exists', 404));
     
     const newExam = await examModel.create(req.body);
-    existTeacher.exams.push(newExam); 
-    await existTeacher.save(); 
+    teacher.exams.push(newExam); 
+    await teacher.save(); 
     res.status(201).json({ message: "Done", newExam });
 });
 
