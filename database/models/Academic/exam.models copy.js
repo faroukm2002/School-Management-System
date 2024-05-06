@@ -44,12 +44,11 @@ questions: [{
 
 }],
 
-createdBy: [{
+createdby: {
     type: Schema.Types.ObjectId,
-    ref: "admin",
+    ref: 'admin',
     required: true
-
-}],
+},
 totalMark: {
     type: Number,
     required: true,
