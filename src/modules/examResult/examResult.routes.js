@@ -1,20 +1,18 @@
 import express from 'express';
-import *as exam from './examResult.controller.js';
+import *as examResult from './examResult.controller.js';
 import validate from '../../middleware/validate.js';
 import { allowedto } from '../auth/auth.controller.js';
-import { addExamvalidation, deleteExamValidation, updateExamrValidation } from './examResult.validation.js';
+import { checkExamResultvalidation, updateExamResultValidation } from './examResult.validation.js';
 
-const examRouter=express.Router();
+const examResultRouter=express.Router();
 
 
 
-examRouter.route('/')
-.post(validate(addExamvalidation), allowedto('teacher'), exam.addExam)
-.get(allowedto('admin'),exam.getAllExams)
+examResultRouter.route('/')
+.get(validate(checkExamResultvalidation),allowedto('student'),examResult.checkExamResult)
 
-examRouter.route('/:id')
-.get(allowedto('admin'),exam.getExamByID)
-.put(validate(updateExamrValidation),allowedto('teacher'), exam.updateExam )
-.delete(validate(deleteExamValidation),allowedto('admin'), exam.deleteExam)
+examResultRouter.route('/:id')
+.put(validate(updateExamResultValidation),allowedto('admin'), examResult.publishedExamResult )
+// .get(validate(checkExamResultvalidation),allowedto('student'),examResult.checkExamResult)
 
-export default examRouter
+export default examResultRouter

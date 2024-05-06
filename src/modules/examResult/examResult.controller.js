@@ -1,85 +1,63 @@
-import { examModel } from "../../../database/models/Academic/exam.models.js";
-import { teacherModel } from "../../../database/models/teacher.models.js";
+import { examResultModel } from "../../../database/models/Academic/examResult.models.js";
+import { studentModel } from "../../../database/models/student.models.js";
 import { AppError } from "../../utils/AppError.js"
 import { catchError } from "../../utils/catchError.js"
-import { deleteOne } from "../handlers/refactor.js"
 
 
-//  Add Exam
-const addExam = catchError(async(req, res, next) => {
-    req.body.createdby = req.user._id;
-    const teacher = await teacherModel.findById(req.user._id);
-    if (!teacher) return next(new AppError('teacher not found', 404));
 
-    const existExam = await examModel.findOne({name:req.body.name});
-    if (existExam) return next(new AppError('Exam already exists', 404));
-    
-    const newExam = await examModel.create(req.body);
-    teacher.exams.push(newExam); 
-    await teacher.save(); 
-    res.status(201).json({ message: "Done", newExam });
-});
 
 
 // Get Exams
-const getAllExams = catchError(async (req, res, next) => {
-    let Exam = await examModel.find().populate(
+const checkExamResult = catchError(async (req, res, next) => {
+    const student=await studentModel.findById(req.user._id)
+    if (!student) return next(new AppError('student not register', 404));
+
+
+    const examResult = await examResultModel.findOne({
+        studentId:req.user._id,
+        examId:req.params.examId
+    }).populate(
         {
-            path:"questions",
-            select:"-correctAnswer -Incorrect -updatedAt -createdAt",
+            path:"examId",
             populate:{ 
-                path:"createdBy",
-                select:"Name",
+                path:"questions",
+                select:"question",
             }
-        },
-            
-    ).select(" Name duration questions ");
-      res.status(201).json({ message: "Done this is Exam", Exam });
+        } );
+        if (!examResult) return next(new AppError('examResult not found', 404));
+    
+        if (!examResult.IsPublished) return next(new AppError("examResult not published yet ,back later", 404));
+      res.status(201).json({ message: "Done this is Result", examResult });
   });
 
-
-  //  Get ExamBY_ID
-  
-    const getExamByID=catchError(async(req,res,next)=>{
-
-        const Exam=await examModel.findById(req.params.id)
-        !Exam&& next(new AppError('Exam not found',404))
-
-        Exam&&   res.status(201).json({message:"this is Exam",Exam})
-
-    })
-     
 
 
 
     
 
+// Admin obscure Results
 
-const updateExam= catchError(async(req,res,next)=>{
+const publishedExamResult= catchError(async(req,res,next)=>{
     const{id}=req.params
-    const Exam=await examModel.findByIdAndUpdate(
+    const examResult=await examResultModel.findByIdAndUpdate(
         id,
-        req.body,
+        {IsPublished:req.body.isPublished},
         {new:true}
     )
-    !Exam && next(new AppError('Exam not found',404))
+    !examResult && next(new AppError('result not found',404))
 
-      Exam &&   res.status(201).json({message:"this is Exam",Exam})
+    examResult &&   res.status(201).json({message:"this is result",examResult})
 }
 )
 
 
- const deleteExam= deleteOne(examModel,"Exam")  
 
 
 
 
 export {
-    addExam,
- getAllExams,   
- getExamByID,
- updateExam,
- deleteExam
+    checkExamResult,   
+    publishedExamResult,
 }
 
   

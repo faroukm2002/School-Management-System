@@ -5,6 +5,7 @@ import adminRouter from "./modules/admin/admin.routes.js";
 import authRouter from "./modules/auth/auth.routes.js";
 import ClassLevelRouter from "./modules/class/class.routes.js";
 import examRouter from "./modules/exam/exam.routes.js";
+import examResultRouter from "./modules/examResult/examResult.routes.js";
 import parentRouter from "./modules/parent/parent.routes.js";
 import questionRouter from "./modules/question/question.routes.js";
 import studentRouter from "./modules/student/student.routes.js";
@@ -33,6 +34,7 @@ export function bootstrap(app){
     app.use("/api/v1/academicYear",academicYearRouter)
     app.use("/api/v1/exam",examRouter)
     app.use("/api/v1/question",questionRouter)
+    app.use("/api/v1/examResult",examResultRouter)
 
   // url error
   app.use("*", (req, res, next) => {

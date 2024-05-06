@@ -9,7 +9,7 @@ const examResultSchema = new Schema({
             default:"failed"
     },
 
-remarm: {
+remark: {
     type:String,
     required: true,
     enum:['good','very good','poor','Excellent','fair'],
