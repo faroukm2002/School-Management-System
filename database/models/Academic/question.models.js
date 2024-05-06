@@ -31,7 +31,7 @@ correctAnswer: {
     required: true
 },
 Incorrect: {
-    type:String,
+    type:Boolean,
     default: false
 },
 createdBy: {

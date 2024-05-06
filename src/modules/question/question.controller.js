@@ -1,41 +1,43 @@
-import { academicTermModel } from "../../../database/models/Academic/academicTerm.models.js"
-import { adminModel } from "../../../database/models/admin.models.js"
+import { examModel } from "../../../database/models/Academic/exam.models.js";
+import { questionModel } from "../../../database/models/Academic/question.models.js";
 import { AppError } from "../../utils/AppError.js"
 import { catchError } from "../../utils/catchError.js"
 import { deleteOne } from "../handlers/refactor.js"
 
 
-//  Add AcademicTerm
-const addAcademicTerm = catchError(async(req, res, next) => {
-    req.body.createdby = req.user._id;
-    const existAcademicTerm = await academicTermModel.findOne({ name: req.body.name });
-    if (existAcademicTerm) return next(new AppError('AcademicTerm Already Exists', 404));
+//  Add addQuestion
+const addQuestion = catchError(async(req, res, next) => {
+    req.body.createdBy = req.user._id;
+    const Exam = await examModel.findById(req.params.id );
+    if (!Exam) return next(new AppError('exam Already Exists', 404));
 
-    const academicTermCreated = await academicTermModel.create(req.body);
-    const admin = await adminModel.findById(req.user._id);
-    admin.academicTerms.push(academicTermCreated._id);
-    await admin.save();
+    const existQuestion = await questionModel.findOne({ question: req.body.question });
+    if (existQuestion) return next(new AppError('Question Already Exists', 404));
+
+    const Question = await questionModel.create(req.body);
+    Exam.questions.push(Question);
+    await Exam.save();
    
-     res.status(201).json({ message: "Done", academicTermCreated });
+     res.status(201).json({ message: "Done", Question });
 });
 
-// Get AcademicTerms
-const getAllAcademicTerms = catchError(async (req, res, next) => {
-    let AcademicTerm = await academicTermModel.find();
-      res.status(201).json({ message: "Done this is AcademicTerm", AcademicTerm });
-  });
+// // Get AcademicTerms
+// const getAllAcademicTerms = catchError(async (req, res, next) => {
+//     let AcademicTerm = await academicTermModel.find();
+//       res.status(201).json({ message: "Done this is AcademicTerm", AcademicTerm });
+//   });
 
 
-  //  Get AcademicTerm BY_ID
+//   //  Get AcademicTerm BY_ID
   
-    const getAcademicTermByID=catchError(async(req,res,next)=>{
+//     const getAcademicTermByID=catchError(async(req,res,next)=>{
 
-        const AcademicTerm=await academicTermModel.findById(req.params.id)
-        !AcademicTerm && next(new AppError('AcademicTerm not found',404))
+//         const AcademicTerm=await academicTermModel.findById(req.params.id)
+//         !AcademicTerm && next(new AppError('AcademicTerm not found',404))
 
-        AcademicTerm &&   res.status(201).json({message:"this is AcademicTerm",AcademicTerm})
+//         AcademicTerm &&   res.status(201).json({message:"this is AcademicTerm",AcademicTerm})
 
-    })
+//     })
      
 
 
@@ -43,33 +45,33 @@ const getAllAcademicTerms = catchError(async (req, res, next) => {
     
 
 
-const updateAcademicTerm= catchError(async(req,res,next)=>{
-    const{id}=req.params
-    req.body.updatedBy = req.user._id
+// const updateAcademicTerm= catchError(async(req,res,next)=>{
+//     const{id}=req.params
+//     req.body.updatedBy = req.user._id
 
-    const AcademicTerm=await academicTermModel.findByIdAndUpdate(
-        id,
-        req.body,
-        {new:true}
-    )
-    !AcademicTerm && next(new AppError('AcademicTerm not found',404))
+//     const AcademicTerm=await academicTermModel.findByIdAndUpdate(
+//         id,
+//         req.body,
+//         {new:true}
+//     )
+//     !AcademicTerm && next(new AppError('AcademicTerm not found',404))
 
-      AcademicTerm &&   res.status(201).json({message:"this is AcademicTerm",AcademicTerm})
-}
-)
+//       AcademicTerm &&   res.status(201).json({message:"this is AcademicTerm",AcademicTerm})
+// }
+// )
 
 
- const deleteAcademicTerm= deleteOne(academicTermModel,"AcademicTerm")  
+//  const deleteAcademicTerm= deleteOne(academicTermModel,"AcademicTerm")  
 
 
 
 
 export {
-    addAcademicTerm,
- getAllAcademicTerms,   
- getAcademicTermByID,
- updateAcademicTerm,
- deleteAcademicTerm
+    addQuestion,
+//  getAllAcademicTerms,   
+//  getAcademicTermByID,
+//  updateAcademicTerm,
+//  deleteAcademicTerm
 }
 
   

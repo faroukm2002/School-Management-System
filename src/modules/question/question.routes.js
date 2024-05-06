@@ -1,20 +1,20 @@
 import express from 'express';
-import *as academicTerm from './question.controller.js';
+import *as question from './question.controller.js';
 import validate from '../../middleware/validate.js';
-import { addAcademicTermvalidation, deleteAcademicTermValidation, updateAcademicTermrValidation, } from './question.validation.js';
 import { allowedto } from '../auth/auth.controller.js';
+import { addQuestionvalidation, } from './question.validation.js';
 
-const academicTermRouter=express.Router();
+const   questionRouter=express.Router();
 
 
 
-academicTermRouter.route('/')
-.post(validate(addAcademicTermvalidation), allowedto('admin'), academicTerm.addAcademicTerm)
-.get(allowedto('admin'),academicTerm.getAllAcademicTerms)
+// questionRouter.route('/')
+// .get(allowedto('admin'),question.getAllQuestions)
 
-academicTermRouter.route('/:id')
-.get(allowedto('admin'),academicTerm.getAcademicTermByID)
-.put(validate(updateAcademicTermrValidation),allowedto('admin'), academicTerm.updateAcademicTerm )
-.delete(validate(deleteAcademicTermValidation),allowedto('admin'), academicTerm.deleteAcademicTerm)
+questionRouter.route('/:id')
+.post(validate(addQuestionvalidation), allowedto('teacher'), question.addQuestion)
+// .get(allowedto('admin'),question.getQuestionByID)
+// .put(validate(updateQuestionrValidation),allowedto('admin'), question.updateQuestion )
+// .delete(validate(deleteQuestionValidation),allowedto('admin'), question.deleteQuestion)
 
-export default academicTermRouter
+export default questionRouter
