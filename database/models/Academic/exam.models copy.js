@@ -24,7 +24,7 @@ examDate: {
     required: [true, 'examDate is required'],
 },
 examTime: {
-    type:Date,
+    type:String,
     required: [true, 'examTime is required'],
 },
 examType: {

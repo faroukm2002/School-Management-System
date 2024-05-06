@@ -7,16 +7,18 @@ const addExamvalidation = Joi.object({
   examTime: Joi.string().required(),
   examDate: Joi.string().required(),
   examType: Joi.string().required(),
+  examStatus: Joi.string().required(),
+
   examType: Joi.string().required(),
   totalMark: Joi.number().required(),
   passMark: Joi.number().required(),
 
   academicTermId: Joi.string().hex().length(24).required(), 
-  AcademicYearId: Joi.string().hex().length(24).required(), 
+  academicYearId: Joi.string().hex().length(24).required(), 
   program: Joi.string().hex().length(24).required(), 
   classLevel: Joi.string().hex().length(24).required(), 
   questions: Joi.string().hex().length(24).required(), 
-  createdBy: Joi.string().hex().length(24).required(), 
+  subjectId: Joi.string().hex().length(24).required(), 
 
 });
 
@@ -32,7 +34,7 @@ const updateExamrValidation = Joi.object({
   passMark: Joi.number().required(),
 
   academicTermId: Joi.string().hex().length(24).required(), 
-  AcademicYearId: Joi.string().hex().length(24).required(), 
+  academicYearId: Joi.string().hex().length(24).required(), 
   program: Joi.string().hex().length(24).required(), 
   classLevel: Joi.string().hex().length(24).required(), 
   questions: Joi.string().hex().length(24).required(), 

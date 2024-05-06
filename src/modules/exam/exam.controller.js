@@ -12,14 +12,14 @@ const addExam = catchError(async(req, res, next) => {
     if (!existTeacher) return next(new AppError('teacher not found', 404));
 
     const existExam = await examModel.findOne({name:req.body.name});
-    if (existExam) return next(new AppError('Exam  aready exist', 404));
+    if (existExam) return next(new AppError('Exam already exists', 404));
     
     const newExam = await examModel.create(req.body);
-    await teacher.exams.push(newExam);
-    await teacher.save();
-   
-     res.status(201).json({ message: "Academic Term Add", newExam });
+    existTeacher.exams.push(newExam); 
+    await existTeacher.save(); 
+    res.status(201).json({ message: "Done", newExam });
 });
+
 
 // // Get Exams
 // const getAllExams = catchError(async (req, res, next) => {
