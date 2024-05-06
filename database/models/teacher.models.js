@@ -91,6 +91,21 @@ const teacherSchema = new Schema({
         type: Schema.ObjectId,
         ref: "class",
     },
+    exams: [{
+        type: Schema.Types.ObjectId,
+        ref:"exam",
+    }],
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        ref:"admin",
+    },
+    academicYear: {
+        type:String,
+ 
+    },
+    academicterm: {
+        type:String,
+    },
 }, { timestamps: true });
 
 // Hash password 
