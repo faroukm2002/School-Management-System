@@ -70,15 +70,39 @@ placeOfBirth:{
     trim:true,
 }, 
 
-    subject:{
+    subject:[{
         type:Schema.ObjectId,
         ref:"subject",
-      },
+      }],
+
       classLevel:{
         type:Schema.ObjectId,
         ref:"class",
       },
 
+      examResults: [{
+        type: Schema.Types.ObjectId,
+        ref: "examResult",
+    }],
+
+      exams: [{
+        type: Schema.Types.ObjectId,
+        ref:"exam",
+    }],
+    
+    academicYear: {
+        type: Schema.Types.ObjectId,
+        ref:"academicYear",
+    },
+    
+    YearGraduatd: {
+        type: Date,
+    },
+    
+    isGraduated: {
+        type: Boolean,
+        default:false
+    }
 },{timeStamp:true});
 
 
