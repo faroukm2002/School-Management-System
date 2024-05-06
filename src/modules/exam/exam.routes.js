@@ -2,7 +2,7 @@ import express from 'express';
 import *as exam from './exam.controller.js';
 import validate from '../../middleware/validate.js';
 import { allowedto } from '../auth/auth.controller.js';
-import { addExamvalidation } from './exam.validation.js';
+import { addExamvalidation, deleteExamValidation, updateExamrValidation } from './exam.validation.js';
 
 const examRouter=express.Router();
 
@@ -10,11 +10,11 @@ const examRouter=express.Router();
 
 examRouter.route('/')
 .post(validate(addExamvalidation), allowedto('teacher'), exam.addExam)
-// .get(allowedto('admin'),exam.getAllexams)
+.get(allowedto('admin'),exam.getAllExams)
 
-// examRouter.route('/:id')
-// .get(allowedto('admin'),exam.getexamByID)
-// .put(validate(updateexamrValidation),allowedto('admin'), exam.updateexam )
-// .delete(validate(deleteexamValidation),allowedto('admin'), exam.deleteexam)
+examRouter.route('/:id')
+.get(allowedto('admin'),exam.getExamByID)
+.put(validate(updateExamrValidation),allowedto('teacher'), exam.updateExam )
+.delete(validate(deleteExamValidation),allowedto('admin'), exam.deleteExam)
 
 export default examRouter

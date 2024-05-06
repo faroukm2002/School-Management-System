@@ -21,23 +21,33 @@ const addExam = catchError(async(req, res, next) => {
 });
 
 
-// // Get Exams
-// const getAllExams = catchError(async (req, res, next) => {
-//     let Exam = await examModel.find();
-//       res.status(201).json({ message: "Done this is Exam", Exam });
-//   });
+// Get Exams
+const getAllExams = catchError(async (req, res, next) => {
+    let Exam = await examModel.find().populate(
+        // {
+        //     path:"questions",
+        //     select:"-correctAnswer -Incorrect -updatedAt -createdAt",
+        //     populate:{ 
+        //         path:"createdBy",
+        //         select:"Name",
+        //     }
+        // },
+            
+    ).select(" Name duration questions ");
+      res.status(201).json({ message: "Done this is Exam", Exam });
+  });
 
 
-//   //  Get AcademicTerm BY_ID
+  //  Get ExamBY_ID
   
-//     const getAcademicTermByID=catchError(async(req,res,next)=>{
+    const getExamByID=catchError(async(req,res,next)=>{
 
-//         const AcademicTerm=await academicTermModel.findById(req.params.id)
-//         !AcademicTerm && next(new AppError('AcademicTerm not found',404))
+        const Exam=await examModel.findById(req.params.id)
+        !Exam&& next(new AppError('Exam not found',404))
 
-//         AcademicTerm &&   res.status(201).json({message:"this is AcademicTerm",AcademicTerm})
+        Exam&&   res.status(201).json({message:"this is Exam",Exam})
 
-//     })
+    })
      
 
 
@@ -45,33 +55,31 @@ const addExam = catchError(async(req, res, next) => {
     
 
 
-// const updateAcademicTerm= catchError(async(req,res,next)=>{
-//     const{id}=req.params
-//     req.body.updatedBy = req.user._id
+const updateExam= catchError(async(req,res,next)=>{
+    const{id}=req.params
+    const Exam=await examModel.findByIdAndUpdate(
+        id,
+        req.body,
+        {new:true}
+    )
+    !Exam && next(new AppError('Exam not found',404))
 
-//     const AcademicTerm=await academicTermModel.findByIdAndUpdate(
-//         id,
-//         req.body,
-//         {new:true}
-//     )
-//     !AcademicTerm && next(new AppError('AcademicTerm not found',404))
-
-//       AcademicTerm &&   res.status(201).json({message:"this is AcademicTerm",AcademicTerm})
-// }
-// )
+      Exam &&   res.status(201).json({message:"this is Exam",Exam})
+}
+)
 
 
-//  const deleteAcademicTerm= deleteOne(examModel,"AcademicTerm")  
+ const deleteExam= deleteOne(examModel,"Exam")  
 
 
 
 
 export {
     addExam,
-//  getAllAcademicTerms,   
-//  getAcademicTermByID,
-//  updateAcademicTerm,
-//  deleteAcademicTerm
+ getAllExams,   
+ getExamByID,
+ updateExam,
+ deleteExam
 }
 
   
