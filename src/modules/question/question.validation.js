@@ -15,7 +15,7 @@ const addQuestionvalidation = Joi.object({
 const updateQuestionValidation = Joi.object({
    
     id: Joi.string().hex().length(24).required(), 
-    name: Joi.string().min(2).max(20),
+    question: Joi.string(),
     optionA: Joi.string(),
     optionB: Joi.string(),
     optionC: Joi.string(),

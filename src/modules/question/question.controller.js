@@ -21,23 +21,23 @@ const addQuestion = catchError(async(req, res, next) => {
      res.status(201).json({ message: "Done", Question });
 });
 
-// // Get AcademicTerms
-// const getAllAcademicTerms = catchError(async (req, res, next) => {
-//     let AcademicTerm = await academicTermModel.find();
-//       res.status(201).json({ message: "Done this is AcademicTerm", AcademicTerm });
-//   });
+// Get Questions
+const getAllQuestions = catchError(async (req, res, next) => {
+    let Question = await questionModel.find();
+      res.status(201).json({ message: "Done this is Question", Question });
+  });
 
 
-//   //  Get AcademicTerm BY_ID
+  //  Get Question BY_ID
   
-//     const getAcademicTermByID=catchError(async(req,res,next)=>{
+    const getQuestionByID=catchError(async(req,res,next)=>{
 
-//         const AcademicTerm=await academicTermModel.findById(req.params.id)
-//         !AcademicTerm && next(new AppError('AcademicTerm not found',404))
+        const Question=await questionModel.findById(req.params.id)
+        !Question && next(new AppError('Question not found',404))
 
-//         AcademicTerm &&   res.status(201).json({message:"this is AcademicTerm",AcademicTerm})
+        Question &&   res.status(201).json({message:"this is Question",Question})
 
-//     })
+    })
      
 
 
@@ -45,33 +45,32 @@ const addQuestion = catchError(async(req, res, next) => {
     
 
 
-// const updateAcademicTerm= catchError(async(req,res,next)=>{
-//     const{id}=req.params
-//     req.body.updatedBy = req.user._id
+const updateQuestion= catchError(async(req,res,next)=>{
+    const{id}=req.params
 
-//     const AcademicTerm=await academicTermModel.findByIdAndUpdate(
-//         id,
-//         req.body,
-//         {new:true}
-//     )
-//     !AcademicTerm && next(new AppError('AcademicTerm not found',404))
+    const Question=await questionModel.findByIdAndUpdate(
+        id,
+        req.body,
+        {new:true}
+    )
+    !Question && next(new AppError('Question not found',404))
 
-//       AcademicTerm &&   res.status(201).json({message:"this is AcademicTerm",AcademicTerm})
-// }
-// )
+      Question &&   res.status(201).json({message:"this is Question",Question})
+}
+)
 
 
-//  const deleteAcademicTerm= deleteOne(academicTermModel,"AcademicTerm")  
+ const deleteQuestion= deleteOne(questionModel,"Question")  
 
 
 
 
 export {
     addQuestion,
-//  getAllAcademicTerms,   
-//  getAcademicTermByID,
-//  updateAcademicTerm,
-//  deleteAcademicTerm
+ getAllQuestions,   
+ getQuestionByID,
+ updateQuestion,
+ deleteQuestion
 }
 
   
