@@ -24,14 +24,14 @@ const addExam = catchError(async(req, res, next) => {
 // Get Exams
 const getAllExams = catchError(async (req, res, next) => {
     let Exam = await examModel.find().populate(
-        // {
-        //     path:"questions",
-        //     select:"-correctAnswer -Incorrect -updatedAt -createdAt",
-        //     populate:{ 
-        //         path:"createdBy",
-        //         select:"Name",
-        //     }
-        // },
+        {
+            path:"questions",
+            select:"-correctAnswer -Incorrect -updatedAt -createdAt",
+            populate:{ 
+                path:"createdBy",
+                select:"Name",
+            }
+        },
             
     ).select(" Name duration questions ");
       res.status(201).json({ message: "Done this is Exam", Exam });
