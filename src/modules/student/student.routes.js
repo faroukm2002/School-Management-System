@@ -18,6 +18,7 @@ studentRouter.route('/:id')
 .get( validate(getStudentProfileByIdValidation), allowedto('student'), student.getStudentProfileByID)
 .put(validate(updaStudentValidation), allowedto('student'), student.updateStudent)
 
-.delete( validate(deleteStudentValidation),allowedto('admin','student'), student.deleteStudent)
+.delete( validate(deleteStudentValidation),allowedto('admin'), student.deleteStudent)
+.post( allowedto('admin'), student.promotingStudent)
 
 export default studentRouter

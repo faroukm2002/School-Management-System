@@ -1,3 +1,5 @@
+import { examModel } from "../../../database/models/Academic/exam.models.js"
+import { examResultModel } from "../../../database/models/Academic/examResult.models.js"
 import { studentModel } from "../../../database/models/student.models.js"
 import { Apifeatures } from "../../utils/Apifeatures.js"
 import { AppError } from "../../utils/AppError.js"
@@ -52,17 +54,17 @@ const updateStudent= catchError(async(req,res,next)=>{
 //  Update studentData by admin
 const updateStudentDataByAdmin = catchError(async (req, res, next) => {
     const { id } = req.params;
-    const { subject, AcademicYear, program, classLevel, IsSuspended, IsWithdrawn } = req.body;
+    const { subject, academicYear, program, classLevel, IsSuspended, IsWithdrawn } = req.body;
     
     const student = await studentModel.findById(id);
     if (!student) return next(new AppError('Student not found', 404));
 
     const update = {
         subject,
-        // AcademicYear,
-        // program,
-        // IsSuspended,
-        // IsWithdrawn,
+        academicYear,
+        program,
+        IsSuspended,
+        IsWithdrawn,
         $addToSet: { classLevel } 
     };
 
@@ -76,13 +78,48 @@ const updateStudentDataByAdmin = catchError(async (req, res, next) => {
 
 
 
+ const promotingStudent = catchError(async (req, res, next) => {
+    const student = await studentModel.findById(req.params.id);
+    if (!student) return next(new AppError('Student not found', 404));
+
+    const examResult = await examResultModel.findOne({ studentId: req.params.id });
+    if (!examResult) return next(new AppError('examResult not found for this student', 404));
+    
+    // Promoting student
+    if (examResult.status === "passed") {
+        switch (student.currentClassLevel) {
+            case "level 1":
+                student.classLevels.push("level 2");
+                student.currentClassLevel = "level 2";
+                break;
+            case "level 2":
+                student.classLevels.push("level 3");
+                student.currentClassLevel = "level 3";
+                break;
+            case "level 3":
+                student.classLevels.push("level 4");
+                student.currentClassLevel = "level 4";
+                break;
+            case "level 4":
+                student.YearGraduated = new Date();
+                student.isGraduated = true;
+                break;
+        }
+        await student.save();
+
+        res.status(201).json({ message: "Student promoting", student });
+    }
+});
+
+
 
 export {
  getAllStudents,   
  getStudentProfileByID,
  updateStudent,
  updateStudentDataByAdmin,
- deleteStudent
+ deleteStudent,
+ promotingStudent
 }
 
   

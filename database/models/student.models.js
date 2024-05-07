@@ -69,16 +69,41 @@ placeOfBirth:{
     required:true,
     trim:true,
 }, 
+Iswitdrawn: {
+    type: Boolean,
+    default:false,
+},
+IsSuspended: {
+    type: Boolean,
+    default:false,
+},
+applicationStatus: {
+    type: String,
+    enum:["pending","approved","rejected"],
+    default:"pending"
+},
+program: {
+    type: Schema.Types.ObjectId,
+    ref:"program",
+   
+},
+currentClassLevel: {
+    type: String,
+    default:function () {
+     return this.classLevel[this.classLevel.length-1]
+    }
+},
+classLevel:{
+    type:Schema.ObjectId,
+    ref:"class",
+  },
 
     subject:[{
         type:Schema.ObjectId,
         ref:"subject",
       }],
 
-      classLevel:{
-        type:Schema.ObjectId,
-        ref:"class",
-      },
+ 
 
       examResults: [{
         type: Schema.Types.ObjectId,
@@ -89,7 +114,7 @@ placeOfBirth:{
         type: Schema.Types.ObjectId,
         ref:"exam",
     }],
-    
+
     academicYear: {
         type: Schema.Types.ObjectId,
         ref:"academicYear",
