@@ -89,10 +89,15 @@ program: {
 },
 currentClassLevel: {
     type: String,
-    default:function () {
-     return this.classLevel[this.classLevel.length-1]
+    default: function() {
+        if (Array.isArray(this.classLevel) && this.classLevel.length > 0) {
+            return this.classLevel[this.classLevel.length - 1];
+        } else {
+            return "";
+        }
     }
 },
+
 classLevel:{
     type:Schema.ObjectId,
     ref:"class",

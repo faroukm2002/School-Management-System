@@ -17,7 +17,7 @@ const addExamvalidation = Joi.object({
   academicYearId: Joi.string().hex().length(24).required(), 
   program: Joi.string().hex().length(24).required(), 
   classLevel: Joi.string().hex().length(24).required(), 
-  questions: Joi.string().hex().length(24).required(), 
+  questions: Joi.array().items(Joi.string().hex().length(24)).required(),
   subjectId: Joi.string().hex().length(24).required(), 
 
 });

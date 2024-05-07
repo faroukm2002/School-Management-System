@@ -16,5 +16,7 @@ examRouter.route('/:id')
 .get(allowedto('admin'),exam.getExamByID)
 .put(validate(updateExamrValidation),allowedto('teacher'), exam.updateExam )
 .delete(validate(deleteExamValidation),allowedto('admin'), exam.deleteExam)
+examRouter.post('/write/:id', allowedto('student'), exam.writeExam);
+
 
 export default examRouter
