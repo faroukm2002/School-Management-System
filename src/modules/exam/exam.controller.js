@@ -155,8 +155,8 @@ const writeExam = catchError(async (req, res, next) => {
 
   // // assgin resualt 
   const finalResualt = await examResultModel.create({
-    studentId: "66397c63c6905c50596fa4b6",
-    examId: "663aaa91cc521b2a3567f238",    
+    studentId: exam._id,
+    examId: student._id,    
     classLevelId: exam.classLevel,
     academicTermId: exam.academicTermId,
     academicYearId: exam.academicYearId,

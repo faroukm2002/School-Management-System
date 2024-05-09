@@ -8,8 +8,9 @@ const examResultRouter=express.Router();
 
 
 
-examResultRouter.route('/')
-.get(validate(checkExamResultvalidation),allowedto('student'),examResult.checkExamResult)
+examResultRouter.route('/:examId')
+    .get(validate(checkExamResultvalidation), allowedto('student'), examResult.checkExamResult);
+
 
 examResultRouter.route('/:id')
 .put(validate(updateExamResultValidation),allowedto('admin'), examResult.publishedExamResult )

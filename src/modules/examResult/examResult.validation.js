@@ -9,7 +9,7 @@ const checkExamResultvalidation = Joi.object({
 const updateExamResultValidation = Joi.object({
   id: Joi.string().hex().length(24).required(), 
 
-  IsPublished: Joi.boolean().required()
+  isPublished: Joi.boolean().required()
   }
   
 

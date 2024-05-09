@@ -30,7 +30,7 @@ passMark: {
     required: true,
     default:50
 },
-IsPublished: {
+isPublished: {
     type: Boolean,
     default:false
 },
