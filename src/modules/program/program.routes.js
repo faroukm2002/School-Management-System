@@ -15,6 +15,6 @@ programRouter.route('/')
 programRouter.route('/:id')
 .get(allowedto('admin'), program.getProgramByID)
 .put(validate(updateProgramValidation), allowedto('admin'), program.updateProgram)
-// .delete(validate(deleteClassValidation), allowedto('admin'),program.deleteprogram)
+.delete(validate(deleteClassValidation), allowedto('admin'),program.deleteprogram)
 
 export default programRouter
