@@ -81,23 +81,21 @@ const updateStudentDataByAdmin = catchError(async (req, res, next) => {
  const promotingStudent = catchError(async (req, res, next) => {
     const student = await studentModel.findById(req.params.id);
     if (!student) return next(new AppError('Student not found', 404));
-
-    const examResult = await examResultModel.findOne({ studentId: req.params.id });
+    const examResult = await examResultModel.findOne({ studentId: req.params.id }).populate("academictermId");
     if (!examResult) return next(new AppError('examResult not found for this student', 404));
-    
     // Promoting student
     if (examResult.status === "passed") {
         switch (student.currentClassLevel) {
             case "level 1":
-                student.classLevels.push("level 2");
+                student.classLevel.push("level 2");
                 student.currentClassLevel = "level 2";
                 break;
             case "level 2":
-                student.classLevels.push("level 3");
+                student.classLevel.push("level 3");
                 student.currentClassLevel = "level 3";
                 break;
             case "level 3":
-                student.classLevels.push("level 4");
+                student.classLevel.push("level 4");
                 student.currentClassLevel = "level 4";
                 break;
             case "level 4":
@@ -110,6 +108,7 @@ const updateStudentDataByAdmin = catchError(async (req, res, next) => {
         res.status(201).json({ message: "Student promoting", student });
     }
 });
+
 
 
 
