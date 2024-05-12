@@ -1,3 +1,5 @@
+import { programModel } from "../../../database/models/Academic/program.models.js"
+import { adminModel } from "../../../database/models/admin.models.js"
 import { AppError } from "../../utils/AppError.js"
 import { catchError } from "../../utils/catchError.js"
 import { deleteOne } from "../handlers/refactor.js"
@@ -5,15 +7,19 @@ import { deleteOne } from "../handlers/refactor.js"
 
 
 // Add Program
-const addProgram = catchError(async(req,res,next) => {
-    // take createdby from token bta3 admin 
-    req.body.createdBy = req.user._id
-    
-    const Program =new ProgramModel(req.body)
-    await Program.save()
-    res.status(201).json({message:"Done",Program})
+const addProgram = catchError(async(req, res, next) => {
+    req.body.createdBy = req.user._id;
+    const existProgram = await programModel.findOne({ name: req.body.name });
+    if (existProgram) return next(new AppError('Program Already Exists', 404));
 
-}) 
+    const Program = await programModel.create(req.body);
+    if (Program) {
+    const admin = await adminModel.findById(req.user._id);
+    admin.program.push(Program._id);
+    await admin.save();
+    }
+     res.status(201).json({ message: "Done", Program });
+}); 
 
 
 // Get Program
@@ -56,7 +62,7 @@ const updateProgram= catchError(async(req,res,next)=>{
 )
 
 
- const deleteProgram= deleteOne(ProgramModel,"Program")
+ const deleteProgram= deleteOne(programModel,"Program")
 
 
 

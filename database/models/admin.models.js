@@ -54,10 +54,10 @@ const adminSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "student"
     }],
-    // progrm: [{
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Program"
-    // }],
+    program: [{
+        type: Schema.Types.ObjectId,
+        ref: "program"
+    }],
 
 }, {
     timestamps: true

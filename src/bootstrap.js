@@ -7,6 +7,7 @@ import ClassLevelRouter from "./modules/class/class.routes.js";
 import examRouter from "./modules/exam/exam.routes.js";
 import examResultRouter from "./modules/examResult/examResult.routes.js";
 import parentRouter from "./modules/parent/parent.routes.js";
+import programRouter from "./modules/program/program.routes.js";
 import questionRouter from "./modules/question/question.routes.js";
 import studentRouter from "./modules/student/student.routes.js";
 import subjectRouter from "./modules/subject/subject.routes.js";
@@ -35,6 +36,7 @@ export function bootstrap(app){
     app.use("/api/v1/exam",examRouter)
     app.use("/api/v1/question",questionRouter)
     app.use("/api/v1/examResult",examResultRouter)
+    app.use("/api/v1/program",programRouter)
 
   // url error
   app.use("*", (req, res, next) => {
