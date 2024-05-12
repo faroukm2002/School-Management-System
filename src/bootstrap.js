@@ -12,6 +12,7 @@ import questionRouter from "./modules/question/question.routes.js";
 import studentRouter from "./modules/student/student.routes.js";
 import subjectRouter from "./modules/subject/subject.routes.js";
 import teacherRouter from "./modules/teacher/teacher.routes.js"
+import yearGroupRouter from "./modules/yeargroup/yeargroup.routes.js";
 import { AppError } from "./utils/AppError.js";
 import express from 'express'
 import path from 'path'
@@ -37,6 +38,7 @@ export function bootstrap(app){
     app.use("/api/v1/question",questionRouter)
     app.use("/api/v1/examResult",examResultRouter)
     app.use("/api/v1/program",programRouter)
+    app.use("/api/v1/yeargroup",yearGroupRouter)
 
   // url error
   app.use("*", (req, res, next) => {

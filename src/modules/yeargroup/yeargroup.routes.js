@@ -1,20 +1,21 @@
 import express from 'express';
-import *as academicTerm from './academicTerm.controller.js';
+import *as yearGroup from './yeargroup.controller.js';
 import validate from '../../middleware/validate.js';
-import { addAcademicTermvalidation, deleteAcademicTermValidation, updateAcademicTermrValidation, } from './academicTerm.validation.js';
+import { addYearGroupValidation,  } from './yearGroup.validation.js';
 import { allowedto } from '../auth/auth.controller.js';
 
-const academicTermRouter=express.Router();
+const yearGroupRouter=express.Router();
 
 
 
-academicTermRouter.route('/')
-.post(validate(addAcademicTermvalidation), allowedto('admin'), academicTerm.addAcademicTerm)
-.get(allowedto('admin'),academicTerm.getAllAcademicTerms)
+yearGroupRouter.route('/')
+// .get(allowedto('admin'),yearGroup.getAllyearGroups)
 
-academicTermRouter.route('/:id')
-.get(allowedto('admin'),academicTerm.getAcademicTermByID)
-.put(validate(updateAcademicTermrValidation),allowedto('admin'), academicTerm.updateAcademicTerm )
-.delete(validate(deleteAcademicTermValidation),allowedto('admin'), academicTerm.deleteAcademicTerm)
+yearGroupRouter.route('/:id')
+.post(validate(addYearGroupValidation), allowedto('admin'), yearGroup.addYearGroup)
 
-export default academicTermRouter
+// .get(allowedto('admin'),yearGroup.getyearGroupByID)
+// .put(validate(updateyearGrouprValidation),allowedto('admin'), yearGroup.updateyearGroup )
+// .delete(validate(deleteyearGroupValidation),allowedto('admin'), yearGroup.deleteyearGroup)
+
+export default yearGroupRouter

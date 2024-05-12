@@ -6,7 +6,7 @@ const yeargroupSchema = new Schema({
         required: [true, 'Name of year is required'],
         trim: true,
     },
-    academicYaer:{
+    academicYear:{
         type:Schema.Types.ObjectId,
         ref:"academicYear",
         required:true
