@@ -21,7 +21,7 @@ const addYearGroup = catchError(async(req, res, next) => {
 
 // Get YearGroups
 const getAllYearGroups = catchError(async (req, res, next) => {
-    let YearGroup = await YearGroupModel.find();
+    let YearGroup = await yeargroupModel.find();
       res.status(201).json({ message: "Done this is YearGroup", YearGroup });
   });
 
@@ -30,7 +30,7 @@ const getAllYearGroups = catchError(async (req, res, next) => {
   
     const getYearGroupByID=catchError(async(req,res,next)=>{
 
-        const YearGroup=await YearGroupModel.findById(req.params.id)
+        const YearGroup=await yeargroupModel.findById(req.params.id)
         !YearGroup && next(new AppError('YearGroup not found',404))
 
         YearGroup &&   res.status(201).json({message:"this is YearGroup",YearGroup})
@@ -47,7 +47,7 @@ const updateYearGroup= catchError(async(req,res,next)=>{
     const{id}=req.params
     req.body.updatedBy = req.user._id
 
-    const YearGroup=await YearGroupModel.findByIdAndUpdate(
+    const YearGroup=await yeargroupModel.findByIdAndUpdate(
         id,
         req.body,
         {new:true}

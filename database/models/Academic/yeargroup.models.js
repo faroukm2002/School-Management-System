@@ -21,7 +21,11 @@ const yeargroupSchema = new Schema({
         ref: 'admin',
         required: true
     },
-  
+    updateBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'admin',
+        required: true
+    },
 },{ timeStamp: true });
 
 export const yeargroupModel = model('yeargroup', yeargroupSchema);
