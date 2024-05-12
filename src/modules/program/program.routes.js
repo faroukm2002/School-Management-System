@@ -1,7 +1,7 @@
 import express from 'express';
 import *as program from './program.controller.js';
 import validate from '../../middleware/validate.js';
-import { addProgramValidation, updateProgramValidation} from './program.validation.js';
+import { addProgramValidation, deleteProgramValidation, updateProgramValidation} from './program.validation.js';
 import { allowedto } from '../auth/auth.controller.js';
 
 const programRouter=express.Router();
@@ -15,6 +15,6 @@ programRouter.route('/')
 programRouter.route('/:id')
 .get(allowedto('admin'), program.getProgramByID)
 .put(validate(updateProgramValidation), allowedto('admin'), program.updateProgram)
-.delete(validate(deleteClassValidation), allowedto('admin'),program.deleteprogram)
+.delete(validate(deleteProgramValidation), allowedto('admin'),program.deleteProgram)
 
 export default programRouter
