@@ -8,7 +8,7 @@ const addClassvalidation = Joi.object({
 
 });
 
-const updateteaherValidation = Joi.object({
+const updateClassValidation = Joi.object({
    
     id: Joi.string().hex().length(24).required(), 
     name: Joi.string().min(2).max(20),
@@ -27,6 +27,6 @@ const deleteClassValidation = Joi.object({
 
 export { 
   addClassvalidation,
-  updateteaherValidation,
+  updateClassValidation,
   deleteClassValidation
 };
