@@ -24,7 +24,7 @@ const addProgram = catchError(async(req, res, next) => {
 
 // Get Program
 const getAllPrograms = catchError(async (req, res, next) => {
-    let Program = await ProgramModel.find();
+    let Program = await programModel.find()
     // created
       res.status(201).json({ message: "Done this is Program", Program });
   });
@@ -34,7 +34,7 @@ const getAllPrograms = catchError(async (req, res, next) => {
   
     const getProgramByID=catchError(async(req,res,next)=>{
 
-        const Program=await ProgramModel.findById(req.params.id)
+        const Program=await programModel.findById(req.params.id)
         !Program && next(new AppError('Program not found',404))
 
         Program &&   res.status(201).json({message:"this is Program",Program})
@@ -50,7 +50,7 @@ const getAllPrograms = catchError(async (req, res, next) => {
 const updateProgram= catchError(async(req,res,next)=>{
     req.body.updatedBy = req.user._id
     const{id}=req.params
-    const Program=await ProgramModel.findByIdAndUpdate(
+    const Program=await programModel.findByIdAndUpdate(
         id,
         req.body,
         {new:true}

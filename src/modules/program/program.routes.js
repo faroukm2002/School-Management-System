@@ -10,10 +10,10 @@ const programRouter=express.Router();
 
 programRouter.route('/')
 .post(validate(addProgramValidation), allowedto('admin') ,program.addProgram)
-// .get(program.getAllprograms)
+.get(allowedto('admin'),program.getAllPrograms)
 
-// programRouter.route('/:id')
-// .get(allowedto('admin'), program.getprogramByID)
+programRouter.route('/:id')
+.get(allowedto('admin'), program.getProgramByID)
 // .put(validate(updateprogramValidation), allowedto('admin'), program.updateprogram)
 // .delete(validate(deleteClassValidation), allowedto('admin'),program.deleteprogram)
 

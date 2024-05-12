@@ -49,18 +49,17 @@ students:[ {
 }],
 }, {
 timestamps: true,
-toJSON:{virtuals:true},
-toObject:{virtual:true}
+// toJSON:{virtuals:true},
+// toObject:{virtuals:true}  // <-- Change virtual to virtuals
+});
 
-})
-
-programSchema.virtual("mysubject",{
-ref:"subject",
-localField:"_id",
-foreignField:"programId"
-})
-programSchema.pre(/^find/,function(){
-    this.populate('mysubject') 
- })
+// programSchema.virtual("mysubject",{
+// ref:"subject",
+// localField:"_id",
+// foreignField:"programId"
+// })
+// programSchema.pre(/^find/,function(){
+//     this.populate('mysubject') 
+//  })
 
 export const programModel=model('program',programSchema)

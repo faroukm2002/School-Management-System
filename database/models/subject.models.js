@@ -48,6 +48,8 @@ programId: {
 
  
 },{timeStamp:true});
-
+// subjectSchema.pre(/^find/,function(){
+//     this.populate('name', 'description') 
+//  })
 export const subjectModel=model('subject',subjectSchema)
  
