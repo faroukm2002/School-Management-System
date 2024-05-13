@@ -82,10 +82,13 @@ const writeExam = catchError(async (req, res, next) => {
   const examResult = await examResultModel.findOne({
     studentId: student._id,
     examId: exam._id,
-  });
+  }).populate("examId");
+  
+  console.log('Exam Result:', examResult);
   
   if (examResult)
-    return next(new AppError("You have aready tack this exam", 404));
+    return next(new AppError("You have already taken this exam", 404));
+  
 
 
 
@@ -155,8 +158,8 @@ const writeExam = catchError(async (req, res, next) => {
 
   // // assgin resualt 
   const finalResualt = await examResultModel.create({
-    studentId: exam._id,
-    examId: student._id,    
+    studentId: student._id,
+    examId: exam._id,    
     classLevelId: exam.classLevel,
     academicTermId: exam.academicTermId,
     academicYearId: exam.academicYearId,

@@ -8,8 +8,6 @@ import { catchError } from "../../utils/catchError.js"
 
 
 const checkExamResult = catchError(async (req, res, next) => {
-    console.log('User ID:', req.user._id);
-    console.log('Exam ID:', req.params.examId);
 
     const student = await studentModel.findById(req.user._id);
     if (!student) {
@@ -27,11 +25,12 @@ const checkExamResult = catchError(async (req, res, next) => {
         }
     });
 
-    console.log('Exam Result:', examResult);
 
-    if (!examResult) {
+    if (!examResult) 
         return next(new AppError('Exam result not found', 404));
-    }
+    
+    if (!examResult.isPublished) 
+        return next(new Error("examResult not published yet ,back later"))
 
     res.status(200).json({ message: "Exam result found", examResult });
 });
