@@ -27,20 +27,20 @@ updatedBy: {
     type: Schema.Types.ObjectId,
     ref: 'admin',
 },
-teachers: {
+teachers: [{
     type: Schema.Types.ObjectId,
     ref: 'teacher',
-},
+}],
 
-subjects: {
+subjects: [{
     type: Schema.Types.ObjectId,
     ref: 'subject',
-},
+}],
 
-student: {
+student: [{
     type: Schema.Types.ObjectId,
     ref: 'student',
-},
+}],
 
  
 },{timeStamp:true});
