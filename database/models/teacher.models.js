@@ -83,14 +83,29 @@ const teacherSchema = new Schema({
     finished_date: {
         type: Date
     },
+    Iswitdrawn: {
+        type: Boolean,
+        default:false,
+    },
+    IsSuspended: {
+        type: Boolean,
+        default:false,
+    },
     subject: {
         type: Schema.ObjectId,
         ref: "subject",
     },
     classLevel: {
-        type: Schema.ObjectId,
-        ref: "class",
+        type:String,
     },
+    program: {
+        type:String,
+    },
+    applicationStatus: {
+        type: String,
+        enum:["pending","approved","rejected"],
+        default:"pending"
+    }, 
     exams: [{
         type: Schema.Types.ObjectId,
         ref:"exam",
@@ -101,13 +116,13 @@ const teacherSchema = new Schema({
     },
     academicYear: {
         type:String,
- 
+  
     },
-    academicterm: {
+    academicTerm: {
         type:String,
     },
 }, { timestamps: true });
-
+ 
 // Hash password 
 teacherSchema.pre("save", function (next) {
     this.password = bcrypt.hashSync(this.password, parseInt(process.env.SALTROUND));

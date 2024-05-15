@@ -31,6 +31,7 @@ const AdminRegister = catchError(async (req, res, next) => {
 
 const TeacherRegister = catchError(async (req, res, next) => {
     req.body.image=req.file.filename
+    req.body.createdBy = req.user._id;
 
     let {email} = req.body
 

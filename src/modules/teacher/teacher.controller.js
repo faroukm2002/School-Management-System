@@ -18,7 +18,7 @@ const getAllteachers=catchError(async(req,res,next)=>{
   //  Get TeacherProfile BY_ID
     const getTeacherProfileByID=catchError(async(req,res,next)=>{
 
-        const teacher=await teacherModel.findById(req.params.id)
+        const teacher=await teacherModel.findById(req.params.id).select("name email role")
         if (!teacher) {
             next(new AppError(" Teacher not found",404))
         } else {
@@ -49,17 +49,55 @@ const updateTeacher= catchError(async(req,res,next)=>{
 )
 
 
-
+// delete teacher
  const deleteTeacher= deleteOne(teacherModel,"Teacher")
 
+//  admin assign roles to teacher
 
+const assigningTeacherRole = catchError(async (req, res, next) => {
+    const { academicTerm, academicYear, program, classLevel } = req.body;
+    const teacher = await teacherModel.findById(req.params.id);
+   
+    if (!teacher) return next(new AppError('Teacher not found', 404));
+    
+    if (teacher.Iswitdrawn || teacher.IsSuspended) {
+        return next(new AppError('Teacher is Iswitdrawn or IsSuspended', 404));  
+    }
+
+    if (program) {
+        teacher.program = program;
+        await teacher.save();
+        return res.status(201).json({ message: "Program added to teacher" });
+    }
+    
+    if (academicTerm) {
+        teacher.academicTerm = academicTerm;
+        await teacher.save();
+        return res.status(201).json({ message: "Academic term added to teacher" });
+    }
+
+    if (academicYear) {
+        teacher.academicYear = academicYear;
+        await teacher.save();
+        return res.status(201).json({ message: "Academic year added to teacher" });
+    }
+
+    if (classLevel) {
+        teacher.classLevel = classLevel;
+        await teacher.save();
+        return res.status(201).json({ message: "Class level added to teacher" });
+    }
+
+    return res.status(400).json({ message: "No valid fields provided for update" });
+});
 
 
 export {
  getAllteachers,   
  getTeacherProfileByID,
  updateTeacher,
- deleteTeacher
+ deleteTeacher,
+ assigningTeacherRole
 }
 
   

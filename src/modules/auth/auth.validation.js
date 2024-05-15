@@ -23,7 +23,11 @@ const TeacherRegisterValidation = Joi.object({
   city: Joi.string().min(2).max(50).required(),
   started_date: Joi.date(),
   finished_date: Joi.date(),
-  subjects: Joi.array().items(Joi.string()) 
+  subject: Joi.string(),
+  classLevel: Joi.string(),
+  program: Joi.string() ,
+
+
 });
 
   
