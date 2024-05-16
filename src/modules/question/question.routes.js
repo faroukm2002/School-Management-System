@@ -1,8 +1,8 @@
 import express from 'express';
 import *as question from './question.controller.js';
 import validate from '../../middleware/validate.js';
-import { allowedto } from '../auth/auth.controller.js';
 import { addQuestionvalidation, deleteQuestionValidation, updateQuestionValidation, } from './question.validation.js';
+import { allowedto } from '../../middleware/authorization.js';
 
 const   questionRouter=express.Router();
 

@@ -2,7 +2,7 @@ import express from 'express';
 import *as yearGroup from './yeargroup.controller.js';
 import validate from '../../middleware/validate.js';
 import { addYearGroupValidation,deleteYearGroupValidation,updateYearGroupValidation  } from './yearGroup.validation.js';
-import { allowedto } from '../auth/auth.controller.js';
+import { allowedto } from '../../middleware/authorization.js';
 
 const yearGroupRouter=express.Router();
 

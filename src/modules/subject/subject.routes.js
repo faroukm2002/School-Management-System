@@ -3,7 +3,7 @@ import *as subject from './subject.controller.js';
 import validate from '../../middleware/validate.js';
 import { addSubjectsvalidation, updateSubjectValidation } from './subject.validation.js';
 import { deleteClassValidation } from '../class/class.validation.js';
-import { allowedto } from '../auth/auth.controller.js';
+import { allowedto } from '../../middleware/authorization.js';
 
 const subjectRouter=express.Router();
 

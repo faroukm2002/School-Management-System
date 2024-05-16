@@ -2,7 +2,7 @@ import express from 'express';
 import *as academicTerm from './academicTerm.controller.js';
 import validate from '../../middleware/validate.js';
 import { addAcademicTermvalidation, deleteAcademicTermValidation, updateAcademicTermrValidation, } from './academicTerm.validation.js';
-import { allowedto } from '../auth/auth.controller.js';
+import { allowedto } from '../../middleware/authorization.js';
 
 const academicTermRouter=express.Router();
 

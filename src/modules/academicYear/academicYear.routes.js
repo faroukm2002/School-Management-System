@@ -2,7 +2,7 @@ import express from 'express';
 import *as academicYear from './academicYear.controller.js';
 import validate from '../../middleware/validate.js';
 import { addAcademicYearvalidation, deleteAcademicYearValidation, updateAcademicYearrValidation, } from './academicYear.validation.js';
-import { allowedto } from '../auth/auth.controller.js';
+import { allowedto } from '../../middleware/authorization.js';
 
 const academicYearRouter=express.Router();
 

@@ -2,7 +2,7 @@ import express from 'express';
 import *as admin from './admin.controller.js';
 import validate from '../../middleware/validate.js';
 import { deleteAdminValidation, getAdminProfileByIDValidation, updateAdminValidation } from './admin.validation.js';
-import { allowedto } from '../auth/auth.controller.js';
+import { allowedto } from '../../middleware/authorization.js';
 
 const adminRouter=express.Router();
 

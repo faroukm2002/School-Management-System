@@ -2,7 +2,7 @@ import express from 'express';
 import *as program from './program.controller.js';
 import validate from '../../middleware/validate.js';
 import { addProgramValidation, deleteProgramValidation, updateProgramValidation} from './program.validation.js';
-import { allowedto } from '../auth/auth.controller.js';
+import { allowedto } from '../../middleware/authorization.js';
 
 const programRouter=express.Router();
 

@@ -2,7 +2,7 @@ import express from 'express';
 import *as student from './student.controller.js';
 import validate from '../../middleware/validate.js';
 import {  deleteStudentValidation,  getStudentProfileByIdValidation,  updaStudentValidation,  } from './student.validation.js';
-import { allowedto } from '../auth/auth.controller.js';
+import { allowedto } from '../../middleware/authorization.js';
 
 const studentRouter=express.Router();
 

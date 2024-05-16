@@ -2,8 +2,8 @@ import express from 'express';
 import *as teacher from './teacher.controller.js';
 import validate from '../../middleware/validate.js';
 import {  assigningTeacherRoleValidation, deleteteacherValidation, updateteaherValidation } from './teacher.validation.js';
-import { allowedto } from '../auth/auth.controller.js';
 import { getAdminProfileByIDValidation } from '../admin/admin.validation.js';
+import { allowedto } from '../../middleware/authorization.js';
 
 const teacherRouter=express.Router();
 
