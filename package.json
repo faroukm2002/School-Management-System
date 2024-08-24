@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "A backend project",
   "main": "index.js",
   "type": "module",
   "dependencies": {
@@ -122,6 +122,6 @@
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": "v17.3.1"
+    "node": "17.3.1"
   }
 }
