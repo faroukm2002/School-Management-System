@@ -122,6 +122,6 @@
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": "20.x"
+    "node": "v17.3.1"
   }
 }
