@@ -36,7 +36,7 @@ students: {
         type: Date,
         required: true,
     },
-    ToYear: {
+    toYear: {
         type: Date,
         required: true,
     },

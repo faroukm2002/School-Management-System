@@ -4,6 +4,7 @@ import { studentModel } from "../../database/models/student.models.js";
 import { teacherModel } from "../../database/models/teacher.models.js";
 import { AppError } from "../utils/AppError.js";
 import { catchError } from "../utils/catchError.js";
+import verifyToken from "../utils/verifyToken.js";
 
 
 // 1- check we have token or not 

@@ -1,9 +1,17 @@
 import Joi from "joi";
 
 const AdminRegisterValidation = Joi.object({
-  name: Joi.string().required(),
+  name: Joi.string().min(2).max(20).required(),
   email: Joi.string().required().email(),
   password: Joi.string().required(),
+  role: Joi.string().default('admin'),
+  confirmEmail: Joi.boolean().default(false),
+  classLevel: Joi.array().items(Joi.string().pattern(/^[0-9a-fA-F]{24}$/)),
+  academicYears: Joi.array().items(Joi.string().pattern(/^[0-9a-fA-F]{24}$/)),
+  academicTerms: Joi.array().items(Joi.string().pattern(/^[0-9a-fA-F]{24}$/)),
+  teachers: Joi.array().items(Joi.string().pattern(/^[0-9a-fA-F]{24}$/)),
+  students: Joi.array().items(Joi.string().pattern(/^[0-9a-fA-F]{24}$/)),
+  program: Joi.array().items(Joi.string().pattern(/^[0-9a-fA-F]{24}$/))
 
 });
 // TeacherRegisterValidation
